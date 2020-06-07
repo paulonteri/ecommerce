@@ -11,6 +11,10 @@ class Category(models.Model):
     #
     last_edited_by = models.ForeignKey('accounts.User', null=True, blank=True, on_delete=models.SET_NULL)
 
+    class Meta:
+        verbose_name_plural = "Categories"
+        ordering = ['title']
+
     def save(self, *args, **kwargs):
         if self.title:
             self.title = self.title.lower()
@@ -31,6 +35,10 @@ class SubCategory(models.Model):
     #
     last_edited_by = models.ForeignKey('accounts.User', null=True, blank=True, on_delete=models.SET_NULL)
 
+    class Meta:
+        verbose_name_plural = "Sub Categories"
+        ordering = ['title']
+
     def save(self, *args, **kwargs):
         if self.title:
             self.title = self.title.lower()
@@ -49,6 +57,9 @@ class Brand(models.Model):
         auto_now=True)
     #
     last_edited_by = models.ForeignKey('accounts.User', null=True, blank=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        ordering = ['title']
 
     def __str__(self):
         return self.title
@@ -69,6 +80,9 @@ class Item(models.Model):
         auto_now=True)
     #
     last_edited_by = models.ForeignKey('accounts.User', null=True, blank=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        ordering = ['title']
 
     def __str__(self):
         return self.title
