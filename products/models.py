@@ -11,6 +11,11 @@ class Category(models.Model):
     #
     last_edited_by = models.ForeignKey('accounts.User', null=True, blank=True, on_delete=models.SET_NULL)
 
+    def save(self, *args, **kwargs):
+        if self.title:
+            self.title = self.title.lower()
+        return super(Category, self).save(*args, **kwargs)
+
     def __str__(self):
         return self.title
 
@@ -25,6 +30,11 @@ class SubCategory(models.Model):
         auto_now=True)
     #
     last_edited_by = models.ForeignKey('accounts.User', null=True, blank=True, on_delete=models.SET_NULL)
+
+    def save(self, *args, **kwargs):
+        if self.title:
+            self.title = self.title.lower()
+        return super(SubCategory, self).save(*args, **kwargs)
 
     def __str__(self):
         return f'{self.title} of {self.category.title}'
