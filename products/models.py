@@ -86,3 +86,42 @@ class Item(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Variation(models.Model):
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    name = models.CharField(max_length=50)  # size, color
+    #
+    time_added = models.DateTimeField(
+        auto_now_add=True)
+    time_last_edited = models.DateTimeField(
+        auto_now=True)
+    #
+    last_edited_by = models.ForeignKey('accounts.User', null=True, blank=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        unique_together = ['item', 'name']
+
+    def __str__(self):
+        return self.name
+
+
+class ItemVariation(models.Model):
+    variation = models.ForeignKey(Variation, on_delete=models.CASCADE)
+    value = models.CharField(max_length=50)  # S, M, L
+    attachment = models.ImageField(blank=True, null=True)
+    #
+    time_added = models.DateTimeField(
+        auto_now_add=True)
+    time_last_edited = models.DateTimeField(
+        auto_now=True)
+    #
+    last_edited_by = models.ForeignKey('accounts.User', null=True, blank=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        unique_together = (
+            ('variation', 'value')
+        )
+
+    def __str__(self):
+        return self.value
