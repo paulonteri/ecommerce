@@ -1,15 +1,20 @@
 from django.db import models
 
 
-class Category(models.Model):
-    title = models.CharField(max_length=30, unique=True)
-    #
+class CommonModelInfo(models.Model):
     time_added = models.DateTimeField(
         auto_now_add=True)
     time_last_edited = models.DateTimeField(
         auto_now=True)
     #
     last_edited_by = models.ForeignKey('accounts.User', null=True, blank=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        abstract = True
+
+
+class Category(CommonModelInfo):
+    title = models.CharField(max_length=30, unique=True)
 
     class Meta:
         verbose_name_plural = "Categories"
@@ -24,16 +29,9 @@ class Category(models.Model):
         return self.title
 
 
-class SubCategory(models.Model):
+class SubCategory(CommonModelInfo):
     title = models.CharField(max_length=50, unique=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    #
-    time_added = models.DateTimeField(
-        auto_now_add=True)
-    time_last_edited = models.DateTimeField(
-        auto_now=True)
-    #
-    last_edited_by = models.ForeignKey('accounts.User', null=True, blank=True, on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name_plural = "Sub Categories"
@@ -48,15 +46,8 @@ class SubCategory(models.Model):
         return f'{self.title} of {self.category.title}'
 
 
-class Brand(models.Model):
+class Brand(CommonModelInfo):
     title = models.CharField(max_length=30, unique=True)
-    #
-    time_added = models.DateTimeField(
-        auto_now_add=True)
-    time_last_edited = models.DateTimeField(
-        auto_now=True)
-    #
-    last_edited_by = models.ForeignKey('accounts.User', null=True, blank=True, on_delete=models.SET_NULL)
 
     class Meta:
         ordering = ['title']
@@ -65,7 +56,7 @@ class Brand(models.Model):
         return self.title
 
 
-class Item(models.Model):
+class Item(CommonModelInfo):
     title = models.CharField(max_length=100)
     price = models.FloatField()
     discount_price = models.FloatField(blank=True, null=True)
@@ -73,13 +64,6 @@ class Item(models.Model):
     brand = models.ForeignKey(Brand, on_delete=models.PROTECT)
     description = models.TextField()
     image = models.ImageField()
-    #
-    time_added = models.DateTimeField(
-        auto_now_add=True)
-    time_last_edited = models.DateTimeField(
-        auto_now=True)
-    #
-    last_edited_by = models.ForeignKey('accounts.User', null=True, blank=True, on_delete=models.SET_NULL)
 
     class Meta:
         ordering = ['title']
@@ -88,16 +72,9 @@ class Item(models.Model):
         return self.title
 
 
-class Variation(models.Model):
+class Variation(CommonModelInfo):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)  # size, color
-    #
-    time_added = models.DateTimeField(
-        auto_now_add=True)
-    time_last_edited = models.DateTimeField(
-        auto_now=True)
-    #
-    last_edited_by = models.ForeignKey('accounts.User', null=True, blank=True, on_delete=models.SET_NULL)
 
     class Meta:
         unique_together = ['item', 'name']
@@ -106,17 +83,10 @@ class Variation(models.Model):
         return self.name
 
 
-class ItemVariation(models.Model):
+class ItemVariation(CommonModelInfo):
     variation = models.ForeignKey(Variation, on_delete=models.CASCADE)
     value = models.CharField(max_length=50)  # S, M, L
     attachment = models.ImageField(blank=True, null=True)
-    #
-    time_added = models.DateTimeField(
-        auto_now_add=True)
-    time_last_edited = models.DateTimeField(
-        auto_now=True)
-    #
-    last_edited_by = models.ForeignKey('accounts.User', null=True, blank=True, on_delete=models.SET_NULL)
 
     class Meta:
         unique_together = (
