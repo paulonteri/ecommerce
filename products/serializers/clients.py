@@ -6,13 +6,13 @@ from products.models import ItemVariation, Variation, Item, SubCategory, Brand
 class SubCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = SubCategory
-        fields = ['title']
+        fields = ['id', 'title']
 
 
 class BrandSerializer(serializers.ModelSerializer):
     class Meta:
         model = Brand
-        fields = ['title']
+        fields = ['id', 'title']
 
 
 class ItemSerializer(serializers.ModelSerializer):
@@ -21,7 +21,7 @@ class ItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Item
-        fields = (
+        fields = [
             'id',
             'title',
             'price',
@@ -29,8 +29,9 @@ class ItemSerializer(serializers.ModelSerializer):
             'sub_category',
             'brand',
             'description',
-            'image'
-        )
+            'image',
+            'slug'
+        ]
 
     def get_sub_category(self, obj):
         return SubCategorySerializer(obj.sub_category).data['title']
@@ -42,11 +43,11 @@ class ItemSerializer(serializers.ModelSerializer):
 class ItemVariationSerializer(serializers.ModelSerializer):
     class Meta:
         model = ItemVariation
-        fields = (
+        fields = [
             'id',
             'value',
             'attachment'
-        )
+        ]
 
 
 class VariationDetailSerializer(serializers.ModelSerializer):
@@ -54,11 +55,11 @@ class VariationDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Variation
-        fields = (
+        fields = [
             'id',
             'name',
             'item'
-        )
+        ]
 
     def get_item(self, obj):
         return ItemSerializer(obj.item).data
@@ -69,11 +70,11 @@ class VariationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Variation
-        fields = (
+        fields = [
             'id',
             'name',
             'item_variations'
-        )
+        ]
 
     def get_item_variations(self, obj):
         return ItemVariationSerializer(obj.itemvariation_set.all(), many=True).data
@@ -84,12 +85,12 @@ class ItemVariationDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ItemVariation
-        fields = (
+        fields = [
             'id',
             'value',
             'attachment',
             'variation'
-        )
+        ]
 
     def get_variation(self, obj):
         return VariationDetailSerializer(obj.variation).data
@@ -102,7 +103,7 @@ class ItemDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Item
-        fields = (
+        fields = [
             'id',
             'title',
             'price',
@@ -111,8 +112,9 @@ class ItemDetailSerializer(serializers.ModelSerializer):
             'brand',
             'description',
             'image',
-            'variations'
-        )
+            'variations',
+            'slug'
+        ]
 
     def get_sub_category(self, obj):
         return SubCategorySerializer(obj.sub_category).data['title']
