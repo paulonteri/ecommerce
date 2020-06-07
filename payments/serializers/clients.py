@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from payments.models import Coupon
+from payments.models import Coupon, Payment
 
 
 class CouponSerializer(serializers.ModelSerializer):
@@ -11,3 +11,13 @@ class CouponSerializer(serializers.ModelSerializer):
             'code',
             'amount'
         ]
+
+
+class PaymentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Payment
+        fields = (
+            'id',
+            'amount',
+            'timestamp'
+        )
