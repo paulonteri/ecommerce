@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django_countries.fields import CountryField
 
 
 class UserManager(BaseUserManager):
@@ -68,12 +69,10 @@ class Address(models.Model):
     zip = models.CharField(max_length=100)
     address_type = models.CharField(max_length=1, choices=ADDRESS_CHOICES)
     default = models.BooleanField(default=False)
+    country = CountryField(multiple=False)
     #
     time_added = models.DateTimeField(auto_now_add=True)
     time_last_edited = models.DateTimeField(auto_now=True)
-
-    # TODO: from django_countries.fields import CountryField
-    # country = CountryField(multiple=False)
 
     def __str__(self):
         return self.user.username
