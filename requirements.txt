@@ -1,5 +1,9 @@
+africastalking==1.2.0
 asgiref==3.2.7
+certifi==2020.4.5.2
 cffi==1.14.0
+chardet==3.0.4
+contextlib2==0.6.0.post1
 cryptography==2.9.2
 Django==3.0.7
 django-cors-headers==3.3.0
@@ -7,11 +11,15 @@ django-countries==6.1.2
 django-rest-knox==4.1.0
 djangorestframework==3.11.0
 environs==8.0.0
+idna==2.9
 marshmallow==3.6.1
 Pillow==7.1.2
 psycopg2-binary==2.8.5
 pycparser==2.20
 python-dotenv==0.13.0
 pytz==2020.1
+requests==2.23.0
+schema==0.7.2
 six==1.15.0
 sqlparse==0.3.1
+urllib3==1.25.9

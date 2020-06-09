@@ -31,3 +31,9 @@ REST_FRAMEWORK = {
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Africa's talking
+AFRICASTALKING_USERNAME = os.environ.setdefault('AFRICASTALKING_USERNAME', 'sandbox')
+AFRICASTALKING_API_KEY = os.environ['AFRICASTALKING_API_KEY']
+AFRICASTALKING_PAYMENT_PROD_NAME = os.environ['AFRICASTALKING_PAYMENT_PROD_NAME']
+AFRICASTALKING_CURRENCY = os.environ.setdefault('AFRICASTALKING_USERNAME', 'KES')
