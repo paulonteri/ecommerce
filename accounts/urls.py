@@ -2,7 +2,7 @@ from django.urls import path, include
 from knox import views as knox_views
 from rest_framework import routers
 
-from .api import RegisterAPI, LoginAPI, UserAPI, GroupAPI, PermissionAPI, \
+from accounts.api.auth import RegisterAPI, LoginAPI, UserAPI, GroupAPI, PermissionAPI, \
     UpdateUserAPI
 
 router = routers.DefaultRouter()

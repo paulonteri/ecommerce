@@ -4,8 +4,8 @@ from rest_framework import generics, permissions, viewsets
 from rest_framework.exceptions import APIException, MethodNotAllowed
 from rest_framework.response import Response
 
-from .models import User
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, \
+from accounts.models import User
+from accounts.serializers.auth import UserSerializer, RegisterSerializer, LoginSerializer, \
     GroupSerializer, PermissionSerializer
 
 
