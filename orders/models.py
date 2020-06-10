@@ -14,6 +14,7 @@ class CommonOrdersModelInfo(models.Model):
 
 
 class OrderItem(models.Model):
+    user = models.ForeignKey('accounts.User', on_delete=models.CASCADE)
     ordered = models.BooleanField(default=False)
     item = models.ForeignKey('products.Item', on_delete=models.PROTECT)
     item_variations = models.ManyToManyField('products.ItemVariation')
