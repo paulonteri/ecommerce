@@ -40,7 +40,6 @@ class AddToCartAPI(APIView):
 
         # Create OrderItems
         if not request.user.is_authenticated:
-            print(request.user)
             raise NotAuthenticated()
 
         # get Item Using slug

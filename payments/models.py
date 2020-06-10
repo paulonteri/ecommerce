@@ -37,7 +37,8 @@ class Payment(CommonModelInfo):
         if payments.filter(paid=True, order=self.order).exists():
             raise ValidationError('Order has already been paid for.')
         if payments.filter(waiting=True, order=self.order).exists():
-            raise ValidationError('Please wait before making a new payment.')
+            raise ValidationError(
+                'Please complete your previous payment before making a new payment.')
 
 
 class Coupon(CommonModelInfo):
@@ -64,6 +65,8 @@ class Refund(CommonModelInfo):
         super().save(*args, **kwargs)
 
     def clean(self):
+        if not self.order.ordered:
+            raise ValidationError('Order not complete.')
         if not self.order.payment_set.filter(paid=True).exists():
             raise ValidationError('Order has not been paid for.')
         if Refund.objects.filter(accepted=True, order=self.order):

@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 
 
@@ -51,8 +52,6 @@ class Order(models.Model):
         'payments.Coupon', on_delete=models.SET_NULL, blank=True, null=True)
     being_delivered = models.BooleanField(default=False)
     received = models.BooleanField(default=False)
-    refund_requested = models.BooleanField(default=False)
-    refund_granted = models.BooleanField(default=False)
     # TODO:
     # ref_code = models.CharField(max_length=20, blank=True, null=True)
     ordered_date = models.DateTimeField()
@@ -70,6 +69,17 @@ class Order(models.Model):
 
     def __str__(self):
         return self.user.username
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+
+    def clean(self):
+        orders = Order.objects.all()
+        if not self.ordered:
+            obj = orders.filter(user=self.user, ordered=False)
+            if obj and obj[0].id != self.id:
+                raise ValidationError('A user cannot have two active carts/orders.')
 
     def get_total(self):
         total = 0
