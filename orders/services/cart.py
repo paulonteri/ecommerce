@@ -6,7 +6,7 @@ from orders.models import OrderItem, Order
 from products.models import Item, Variation
 
 
-def add_to_cart(user: User, item: Item, variations: Variation.objects):
+def add_to_cart(user: User, item: Item, variations):
     """
     Add OrderItems to Order(cart)
     """
@@ -17,10 +17,11 @@ def add_to_cart(user: User, item: Item, variations: Variation.objects):
         user=user,
         ordered=False
     )
-    for v in variations:
-        order_item_qs = order_item_qs.filter(
-            Q(item_variations__exact=v)
-        )
+    if variations:
+        for v in variations:
+            order_item_qs = order_item_qs.filter(
+                Q(item_variations__exact=v)
+            )
 
     # if item is in OrderItem, add quantity
     if order_item_qs.exists():

@@ -47,8 +47,6 @@ class Order(models.Model):
         'accounts.Address', related_name='shipping_address', on_delete=models.SET_NULL, blank=True, null=True)
     billing_address = models.ForeignKey(
         'accounts.Address', related_name='billing_address', on_delete=models.SET_NULL, blank=True, null=True)
-    payment = models.ForeignKey(
-        'payments.Payment', on_delete=models.SET_NULL, blank=True, null=True)
     coupon = models.ForeignKey(
         'payments.Coupon', on_delete=models.SET_NULL, blank=True, null=True)
     being_delivered = models.BooleanField(default=False)
