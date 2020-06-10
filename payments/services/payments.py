@@ -15,7 +15,7 @@ product_name = settings.AFRICASTALKING_PAYMENT_PROD_NAME
 currency_code = settings.AFRICASTALKING_CURRENCY
 
 
-def mobile_payments(phone_number, amount):
+def mobile_payments(phone_number, amount, order_id, transaction_id):
     """"
     Takes in:
     phone number you want and set it to the international format eg: "+254703130580"
@@ -24,7 +24,9 @@ def mobile_payments(phone_number, amount):
     # Metadata which will be resent back in the final payment notification
     metadata = {
         "agentId": "",
-        "productId": ""
+        # do we need this?
+        "order_id": order_id,
+        "transaction_id": transaction_id
     }
 
     try:

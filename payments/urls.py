@@ -1,8 +1,9 @@
 from django.urls import path
 
-from payments.api.clients import AddCouponView, PaymentListView
+from payments.api.clients import AddCouponAPI, PaymentListAPI, PaymentAPI
 
 urlpatterns = [
-    path('', PaymentListView.as_view(), name='payment-list'),
-    path('add-coupon/', AddCouponView.as_view(), name='add-coupon'),
+    path('', PaymentListAPI.as_view(), name='payment-list'),
+    path('add-coupon/', AddCouponAPI.as_view(), name='add-coupon'),
+    path('checkout/', PaymentAPI.as_view(), name='checkout'),
 ]
