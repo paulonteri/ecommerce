@@ -1,12 +1,12 @@
 from django.urls import path
 
-from orders.api.clients import OrderItemDeleteView, OrderQuantityUpdateView, OrderDetailView, AddToCartView
+from orders.api.clients import OrderItemDeleteAPI, ReduceOrderItemQuantityAPI, OrderDetailAPI, AddToCartAPI
 
 urlpatterns = [
-    path('add-to-cart/', AddToCartView.as_view(), name='add-to-cart'),
-    path('order-summary/', OrderDetailView.as_view(), name='order-summary'),
+    path('add-to-cart/', AddToCartAPI.as_view(), name='add-to-cart'),
+    path('order-summary/', OrderDetailAPI.as_view(), name='order-summary'),
     path('order-items/<pk>/delete/',
-         OrderItemDeleteView.as_view(), name='order-item-delete'),
-    path('order-item/update-quantity/',
-         OrderQuantityUpdateView.as_view(), name='order-item-update-quantity'),
+         OrderItemDeleteAPI.as_view(), name='order-item-delete'),
+    path('order-item/reduce-quantity/',
+         ReduceOrderItemQuantityAPI.as_view(), name='order-item-update-quantity'),
 ]
