@@ -27,6 +27,7 @@ class OrderDetailAPI(RetrieveAPIView):
 
 
 class OrderItemDeleteAPI(DestroyAPIView):
+    # TODO:prevent delete of item in order that is in the process of payment
     permission_classes = (IsAuthenticated,)
     queryset = OrderItem.objects.all()
 

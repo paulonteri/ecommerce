@@ -3,6 +3,7 @@ from django.utils import timezone
 
 from accounts.models import User
 from orders.models import OrderItem, Order
+from payments.models import Payment
 from products.models import Item, Variation
 
 
@@ -10,6 +11,13 @@ def add_to_cart(user: User, item: Item, variations):
     """
     Add OrderItems to Order(cart)
     """
+
+    # check if there is an active order
+    order_qs = Order.objects.filter(user=user, ordered=False)
+
+    # check if thre is an order with an incomplete payment
+    if Payment.objects.filter(order__in=order_qs, waiting=True).exists():
+        raise Exception('Please complete the payment of your previous order')
 
     # order item queryset, check for items already in the cart
     order_item_qs = OrderItem.objects.filter(
@@ -37,8 +45,7 @@ def add_to_cart(user: User, item: Item, variations):
         )
         order_item.item_variations.add(*variations)
         order_item.save()
-    # check if there is an active order
-    order_qs = Order.objects.filter(user=user, ordered=False)
+
     # add item to Order if there is an active order
     if order_qs.exists():
         order = order_qs[0]
@@ -64,6 +71,11 @@ def reduce_order_item_quantity(user: User, item: Item, ):
         user=user,
         ordered=False
     )
+
+    # check if thre is an order with an incomplete payment
+    if Payment.objects.filter(order__in=order_qs, waiting=True).exists():
+        raise Exception('Please complete the payment of your previous order')
+
     if order_qs.exists():
         order = order_qs[0]
         # get OrderItem
