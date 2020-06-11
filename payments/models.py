@@ -71,3 +71,20 @@ class Refund(CommonModelInfo):
             raise ValidationError('Order has not been paid for.')
         if Refund.objects.filter(accepted=True, order=self.order):
             raise ValidationError('Order has already been refunded.')
+
+
+class Transaction(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    payment = models.ForeignKey(Payment, on_delete=models.CASCADE, editable=False)
+    #
+    description = models.CharField(max_length=255, null=True, blank=True)
+    status = models.CharField(max_length=255, null=True, blank=True)
+    transaction_id = models.CharField(max_length=255, null=True, blank=True)
+    provider_channel = models.CharField(max_length=255, null=True, blank=True)
+    #
+    paid = models.BooleanField(default=False)
+    waiting = models.BooleanField(default=False)
+    failed = models.BooleanField(default=False)
+    #
+    time_added = models.DateTimeField(auto_now_add=True)
+    time_last_edited = models.DateTimeField(auto_now=True)
