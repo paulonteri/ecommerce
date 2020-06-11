@@ -69,6 +69,8 @@ class PaymentAPI(APIView):
         except ObjectDoesNotExist:
             raise Http404("You do not have an active order")
         except Exception as e:
-            raise APIException(e)
+            print(e)
+            raise APIException('Something went wrong. Please try again. '
+                               'Ensure the billing information you provided is correct')
         else:
             return Response(status=HTTP_200_OK)

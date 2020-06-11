@@ -3,6 +3,8 @@ import uuid
 from django.core.exceptions import ValidationError
 from django.db import models
 
+from payments.models import Payment
+
 
 class CommonOrdersModelInfo(models.Model):
     time_added = models.DateTimeField(
@@ -78,11 +80,17 @@ class Order(models.Model):
         super().save(*args, **kwargs)
 
     def clean(self):
-        orders = Order.objects.all()
-        if not self.ordered:
-            obj = orders.filter(user=self.user, ordered=False)
-            if obj and obj[0].id != self.id:
-                raise ValidationError('A user cannot have two active carts/orders.')
+        orders = Order.objects.filter(user=self.user)
+
+        if self._state.adding:
+
+            if Payment.objects.filter(order__in=orders, waiting=True).exists():
+                raise ValidationError('Please complete your order payments.')
+
+            if not self.ordered:
+                obj = orders.filter(ordered=False)
+                if obj and obj[0].id != self.id:
+                    raise ValidationError('A user cannot have two active carts/orders.')
 
     def get_total(self):
         total = 0
