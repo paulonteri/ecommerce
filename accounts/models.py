@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
 
@@ -56,6 +57,19 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
 
+def validate_kenyan_phone(value):
+    if len(value) != 13:
+        raise ValidationError(
+            _('%(value)s is not a correct phone number.'),
+            params={'value': value},
+        )
+    if value[0] != "+" or value[1] != "2" or value[2] != "5" or value[3] != "4":
+        raise ValidationError(
+            _('%(value)s is not a correct Kenyan phone number.'),
+            params={'value': value},
+        )
+
+
 ADDRESS_CHOICES = (
     ('B', 'Billing'),
     ('S', 'Shipping'),
@@ -69,6 +83,7 @@ class Address(models.Model):
     zip = models.CharField(max_length=100)
     address_type = models.CharField(max_length=1, choices=ADDRESS_CHOICES)
     default = models.BooleanField(default=False)
+    phone_number = models.CharField(max_length=13, validators=[validate_kenyan_phone])
     country = CountryField(multiple=False)
     #
     time_added = models.DateTimeField(auto_now_add=True)
@@ -79,3 +94,7 @@ class Address(models.Model):
 
     class Meta:
         verbose_name_plural = 'Addresses'
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
