@@ -156,3 +156,13 @@ class Transaction(models.Model):
                 raise ValidationError('Transaction cannot be failed and paid at the same time')
             if self.waiting:
                 raise ValidationError('Transaction cannot be failed and waiting at the same time')
+
+
+# TODO: add transaction card
+class TransactionPhone(models.Model):
+    # save the phone number used in a mobile-payments transaction
+    transaction = models.OneToOneField(Transaction, on_delete=models.CASCADE, editable=False)
+    phone_number = models.CharField(max_length=255, editable=False)
+
+    def __str__(self):
+        return f"{self.transaction}"
