@@ -17,10 +17,10 @@ class Payment(CommonModelInfo):
     amount = models.FloatField(editable=False)
     payment_method = models.CharField(max_length=1, choices=PAYMENT_METHODS)
     #
-    paid = models.BooleanField(default=False)
-    waiting = models.BooleanField(default=False)
-    cancelled = models.BooleanField(default=False)
-    failed = models.BooleanField(default=False)
+    paid = models.BooleanField(default=False, editable=False)
+    waiting = models.BooleanField(default=False, editable=False)
+    cancelled = models.BooleanField(default=False, editable=False)
+    failed = models.BooleanField(default=False, editable=False)
     #
     time_added = models.DateTimeField(auto_now_add=True)
     time_last_edited = models.DateTimeField(auto_now=True)
@@ -36,9 +36,39 @@ class Payment(CommonModelInfo):
         payments = Payment.objects.all()
         if payments.filter(paid=True, order=self.order).exists():
             raise ValidationError('Order has already been paid for.')
-        if payments.filter(waiting=True, order=self.order).exists():
-            raise ValidationError(
-                'Please complete your previous payment before making a new payment.')
+        if not self.id:
+            waiting = payments.filter(waiting=True, order=self.order)
+            if waiting.exists():
+                raise ValidationError(
+                    'Please complete your previous payment before making a new payment.')
+        if self.paid:
+            if self.failed:
+                raise ValidationError('Payment cannot be paid and failed at the same time')
+            if self.waiting:
+                raise ValidationError('Payment cannot be paid and waiting at the same time')
+            if self.cancelled:
+                raise ValidationError('Payment cannot be paid and cancelled at the same time')
+        if self.waiting:
+            if self.failed:
+                raise ValidationError('Payment cannot be waiting and failed at the same time')
+            if self.paid:
+                raise ValidationError('Payment cannot be waiting and paid at the same time')
+            if self.cancelled:
+                raise ValidationError('Payment cannot be waiting and cancelled at the same time')
+        if self.failed:
+            if self.paid:
+                raise ValidationError('Payment cannot be failed and paid at the same time')
+            if self.waiting:
+                raise ValidationError('Payment cannot be failed and waiting at the same time')
+            if self.cancelled:
+                raise ValidationError('Payment cannot be failed and cancelled at the same time')
+        if self.cancelled:
+            if self.paid:
+                raise ValidationError('Payment cannot be cancelled and paid at the same time')
+            if self.waiting:
+                raise ValidationError('Payment cannot be cancelled and waiting at the same time')
+            if self.failed:
+                raise ValidationError('Payment cannot be cancelled and failed at the same time')
 
 
 class Coupon(CommonModelInfo):
@@ -71,20 +101,58 @@ class Refund(CommonModelInfo):
             raise ValidationError('Order has not been paid for.')
         if Refund.objects.filter(accepted=True, order=self.order):
             raise ValidationError('Order has already been refunded.')
+        if self.accepted:
+            if self.rejected:
+                raise ValidationError('Refund cannot be accepted and rejected at the same time')
+            if self.waiting:
+                raise ValidationError('Refund cannot be accepted and waiting at the same time')
+        if self.waiting:
+            if self.rejected:
+                raise ValidationError('Refund cannot be waiting and rejected at the same time')
+            if self.accepted:
+                raise ValidationError('Refund cannot be waiting and accepted at the same time')
+        if self.rejected:
+            if self.accepted:
+                raise ValidationError('Refund cannot be rejected and accepted at the same time')
+            if self.waiting:
+                raise ValidationError('Refund cannot be failed and waiting at the same time')
 
 
 class Transaction(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     payment = models.ForeignKey(Payment, on_delete=models.CASCADE, editable=False)
     #
-    description = models.CharField(max_length=255, null=True, blank=True)
-    status = models.CharField(max_length=255, null=True, blank=True)
-    transaction_id = models.CharField(max_length=255, null=True, blank=True)
-    provider_channel = models.CharField(max_length=255, null=True, blank=True)
+    description = models.CharField(max_length=255, null=True, blank=True, editable=False)
+    status = models.CharField(max_length=255, null=True, blank=True, editable=False)
+    transaction_id = models.CharField(max_length=255, null=True, blank=True, editable=False)
+    provider_channel = models.CharField(max_length=255, null=True, blank=True, editable=False)
     #
-    paid = models.BooleanField(default=False)
-    waiting = models.BooleanField(default=False)
-    failed = models.BooleanField(default=False)
+    paid = models.BooleanField(default=False, editable=False)
+    waiting = models.BooleanField(default=False, editable=False)
+    failed = models.BooleanField(default=False, editable=False)
+    #
+    error_message = models.TextField(null=True, blank=True, editable=False)
     #
     time_added = models.DateTimeField(auto_now_add=True)
     time_last_edited = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+
+    def clean(self):
+        if self.paid:
+            if self.failed:
+                raise ValidationError('Transaction cannot be paid and failed at the same time')
+            if self.waiting:
+                raise ValidationError('Transaction cannot be paid and waiting at the same time')
+        if self.waiting:
+            if self.failed:
+                raise ValidationError('Transaction cannot be waiting and failed at the same time')
+            if self.paid:
+                raise ValidationError('Transaction cannot be waiting and paid at the same time')
+        if self.failed:
+            if self.paid:
+                raise ValidationError('Transaction cannot be failed and paid at the same time')
+            if self.waiting:
+                raise ValidationError('Transaction cannot be failed and waiting at the same time')
