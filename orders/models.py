@@ -82,12 +82,37 @@ class Order(models.Model):
     def clean(self):
         orders = Order.objects.filter(user=self.user)
 
+        # Save new Order
         if self._state.adding:
 
-            if Payment.objects.filter(order__in=orders, waiting=True).exists():
-                raise ValidationError('Please complete your order payments.')
+            if orders.exists():
 
-            if not self.ordered:
+                # prevent addition of new orders while waiting for payments
+                if Payment.objects.filter(order__in=orders, waiting=True).exists():
+                    raise ValidationError('Complete previous order payments transactions.')
+
+                # prevent two active orders
+                if not self.ordered:
+                    obj = orders.filter(ordered=False)
+                    if obj and obj[0].id != self.id:
+                        raise ValidationError('A user cannot have two active carts/orders.')
+
+        # Update Order
+        else:
+
+            # prevent editing ordered order
+            ordered_obj_qs = orders.filter(id=self.id, ordered=True)
+            if ordered_obj_qs.exists():
+                ordered_object = ordered_obj_qs[0]
+                if ordered_object.user != self.user or ordered_object.coupon != self.coupon:
+                    raise ValidationError('Order already processed.')
+
+            # prevent addition of new orders while waiting for payments
+            if self.ordered:
+                if Payment.objects.filter(order__in=orders, waiting=True).exists():
+                    raise ValidationError('Complete previous order payments transactions.')
+
+            else:
                 obj = orders.filter(ordered=False)
                 if obj and obj[0].id != self.id:
                     raise ValidationError('A user cannot have two active carts/orders.')
