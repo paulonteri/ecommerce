@@ -4,6 +4,10 @@ from payments.services.payments import mobile_payments
 
 
 def payment_failed(payment: Payment):
+    """
+    Save a failed payment
+    :param payment: Payment object(Model)
+    """
     payment.paid = False
     payment.waiting = False
     payment.cancelled = False
@@ -12,12 +16,16 @@ def payment_failed(payment: Payment):
 
 
 def transaction_failed(transaction: Transaction, error_message=None):
+    """
+    Save a failed Transaction
+    :param transaction: Transaction object(model)
+    :param error_message: Error message to be recorded
+    """
     if error_message:
         if type(error_message) != str:
             try:
                 error_message = str(error_message)
             except:
-                print(error_message)
                 error_message = None
     transaction.paid = False
     transaction.waiting = False
@@ -29,6 +37,11 @@ def transaction_failed(transaction: Transaction, error_message=None):
 
 
 def save_transaction(transaction: Transaction, transaction_resp):
+    """
+    Save the transaction response as a Transaction object to the db
+    :param transaction: Transaction model object
+    :param transaction_resp: Transaction respsonse from africastalking API
+    """
 
     if type(transaction_resp) == dict and transaction_resp['status']:
 
@@ -47,21 +60,23 @@ def save_transaction(transaction: Transaction, transaction_resp):
                                error_message='InvalidRequest: The request could not be accepted as one of the fields '
                                              'was invalid. The description field will contain more information.')
             raise Exception('Transaction Failed: InvalidRequest')
-        #
+
+        # Handle phone number not supported
         elif transaction_resp['status'] == 'NotSupported':
+            # TODO: mark transaction phone number as invalid
             transaction.save()
             transaction_failed(transaction=transaction,
                                error_message='NotSupported: Checkout to the provided phone number is not supported.')
             raise Exception('Transaction Failed: NotSupported')
-        #
+        # Handle unknown fail
         elif transaction_resp['status'] == 'Failed':
             transaction.save()
             transaction_failed(transaction=transaction, error_message='Failed')
             raise Exception('Transaction Failed: Failed')
-        #
+        # Successful transaction. Awaiting confirmation from user
         elif transaction_resp['status'] == 'PendingConfirmation':
             transaction.save()
-            pass
+            return
         else:
             transaction.save()
             transaction_failed(transaction=transaction)
@@ -71,6 +86,13 @@ def save_transaction(transaction: Transaction, transaction_resp):
 
 
 def make_payment(payment: Payment):
+    """
+    Process of making a payment. Creates Transaction.
+    :param payment: Payment model object
+    :return: save_transaction()
+    """
+
+    # new Transaction
     transaction = Transaction(payment=payment, waiting=True)
     transaction.save()
     response = None
@@ -90,7 +112,7 @@ def make_payment(payment: Payment):
 
         elif payment.payment_method == 'C':
             # TODO
-            pass
+            raise Exception('Incorrect payment method')
         else:
             raise Exception('Incorrect payment method')
     except Exception as e:
@@ -101,7 +123,14 @@ def make_payment(payment: Payment):
 
 
 def checkout(order: Order, payment_method: str):
-    # Checkout order/create Payment
+    """
+    Pay for order.
+    :param order: Order model object
+    :param payment_method: Payment.payment_method
+    :return: make_payment()
+    """
+
+    # Create Payment
     payment = Payment(order=order,
                       payment_method=payment_method,
                       amount=order.get_total(),

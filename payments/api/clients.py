@@ -41,6 +41,9 @@ class PaymentListAPI(ListAPIView):
 
 
 class PaymentAPI(APIView):
+    """
+    Handles the checkout & payment process
+    """
     class InputSerializer(serializers.Serializer):
         order = serializers.IntegerField()
         billing_address_id = serializers.IntegerField()
@@ -48,6 +51,14 @@ class PaymentAPI(APIView):
         payment_method = serializers.ChoiceField(choices=PAYMENT_METHODS)
 
     def post(self, request, *args, **kwargs):
+        """
+        :param request: request.data =
+        {
+        'payment_method': PAYMENT_METHODS,
+        'billing_address_id': Address.id,
+        'shipping_address_id': Address.id
+        }
+        """
 
         if not request.user.is_authenticated:
             print(request.user)

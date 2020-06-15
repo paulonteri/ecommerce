@@ -3,7 +3,8 @@ from django.utils import timezone
 
 from accounts.models import User
 from orders.models import OrderItem, Order
-from payments.models import Payment
+from orders.selectors.orders import get_order_for_items_update
+from payments.models import Payment, Coupon
 from products.models import Item, Variation
 
 
@@ -11,13 +12,6 @@ def add_to_cart(user: User, item: Item, variations):
     """
     Add OrderItems to Order(cart)
     """
-
-    # check if there is an active order
-    order_qs = Order.objects.filter(user=user, ordered=False)
-
-    # check if thre is an order with an incomplete payment
-    if Payment.objects.filter(order__in=order_qs, waiting=True).exists():
-        raise Exception('Please complete the payment of your previous order')
 
     # order item queryset, check for items already in the cart
     order_item_qs = OrderItem.objects.filter(
@@ -46,17 +40,19 @@ def add_to_cart(user: User, item: Item, variations):
         order_item.item_variations.add(*variations)
         order_item.save()
 
+    # check if there is an active order
+    order_qs = get_order_for_items_update(user=user)
+
     # add item to Order if there is an active order
-    if order_qs.exists():
-        order = order_qs[0]
+    if order_qs is not None:
+        order = order_qs
         if not order.items.filter(item__id=order_item.id).exists():
             order.items.add(order_item)
             return True
     # create order & add item to Order otherwise
     else:
-        ordered_date = timezone.now()
         order = Order.objects.create(
-            user=user, ordered_date=ordered_date)
+            user=user, ordered_date=timezone.now())
         order.items.add(order_item)
         return True
 
@@ -97,3 +93,6 @@ def reduce_order_item_quantity(user: User, item: Item, ):
             raise Exception("This item was not in your cart")
     else:
         raise Exception("You do not have an active order")
+
+
+# def add_coupon(coupon:Coupon):
