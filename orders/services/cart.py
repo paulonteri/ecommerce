@@ -19,6 +19,7 @@ def add_to_cart(user: User, item: Item, variations):
         user=user,
         ordered=False
     )
+
     if variations:
         for v in variations:
             order_item_qs = order_item_qs.filter(

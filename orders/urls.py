@@ -1,6 +1,6 @@
 from django.urls import path
 
-from orders.api.clients import OrderItemDeleteAPI, ReduceOrderItemQuantityAPI, OrderDetailAPI, AddToCartAPI
+from orders.api.cart import OrderItemDeleteAPI, ReduceOrderItemQuantityAPI, OrderDetailAPI, AddToCartAPI
 
 urlpatterns = [
     path('add-to-cart/', AddToCartAPI.as_view(), name='add-to-cart'),

@@ -75,6 +75,14 @@ class Order(models.Model):
     def __str__(self):
         return self.user.username
 
+    def get_total(self):
+        total = 0
+        for order_item in self.items.all():
+            total += order_item.get_final_price()
+        if self.coupon:
+            total -= self.coupon.amount
+        return total
+
     def save(self, *args, **kwargs):
         self.full_clean()
         super().save(*args, **kwargs)
@@ -117,10 +125,3 @@ class Order(models.Model):
                 if obj and obj[0].id != self.id:
                     raise ValidationError('A user cannot have two active carts/orders.')
 
-    def get_total(self):
-        total = 0
-        for order_item in self.items.all():
-            total += order_item.get_final_price()
-        if self.coupon:
-            total -= self.coupon.amount
-        return total
