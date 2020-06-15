@@ -165,4 +165,32 @@ class TransactionPhone(models.Model):
     phone_number = models.CharField(max_length=255, editable=False)
 
     def __str__(self):
-        return f"{self.transaction}"
+        return self.transaction
+
+
+class TransactionResponse(models.Model):
+    """
+    Save payment notification(transaction response) from the Africastalking API
+    """
+    transaction = models.OneToOneField(Transaction, on_delete=models.CASCADE, editable=False)
+    success = models.BooleanField(default=False, editable=False)
+    provider_fee = models.FloatField(null=True, blank=True, editable=False)
+    africastalking_transaction_id = models.CharField(max_length=255, null=True, blank=True, editable=False)
+    category = models.CharField(max_length=255, null=True, blank=True, editable=False)
+    provider = models.CharField(max_length=255, null=True, blank=True, editable=False)
+    provider_ref_id = models.CharField(max_length=255, null=True, blank=True, editable=False)
+    provider_channel = models.CharField(max_length=255, null=True, blank=True, editable=False)
+    client_account = models.CharField(max_length=255, null=True, blank=True, editable=False)
+    product_name = models.CharField(max_length=255, null=True, blank=True, editable=False)
+    source_type = models.CharField(max_length=255, null=True, blank=True, editable=False)
+    source = models.CharField(max_length=255, null=True, blank=True, editable=False)
+    destination_type = models.CharField(max_length=255, null=True, blank=True, editable=False)
+    destination = models.CharField(max_length=255, null=True, blank=True, editable=False)
+    value = models.CharField(max_length=255, null=True, blank=True, editable=False)
+    transaction_fee = models.CharField(max_length=255, null=True, blank=True, editable=False)
+    description = models.TextField(null=True, blank=True, editable=False)
+    provider_metadata = models.TextField(null=True, blank=True, editable=False)
+    transaction_date = models.DateTimeField(null=True, blank=True, editable=False)
+
+    def __str__(self):
+        return self.transaction

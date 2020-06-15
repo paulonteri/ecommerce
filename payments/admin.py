@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Payment, Coupon, Refund, Transaction, TransactionPhone
+from .models import Payment, Coupon, Refund, Transaction, TransactionPhone, TransactionResponse
 
 admin.site.register(Coupon)
 
@@ -24,3 +24,28 @@ class TransactionAdmin(admin.ModelAdmin):
 @admin.register(TransactionPhone)
 class TransactionPhoneAdmin(admin.ModelAdmin):
     readonly_fields = ['transaction', 'phone_number']
+
+
+@admin.register(TransactionResponse)
+class TransactionResponseAdmin(admin.ModelAdmin):
+    readonly_fields = [
+        'transaction',
+        'success',
+        'provider_fee',
+        'africastalking_transaction_id',
+        'category',
+        'provider',
+        'provider_ref_id',
+        'provider_channel',
+        'client_account',
+        'product_name',
+        'source_type',
+        'source',
+        'destination_type',
+        'destination',
+        'value',
+        'transaction_fee',
+        'description',
+        'provider_metadata',
+        'transaction_date',
+    ]
