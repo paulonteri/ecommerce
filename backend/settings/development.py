@@ -27,11 +27,6 @@ REST_FRAMEWORK = {
     ]
 }
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.0/howto/static-files/
-
-STATIC_URL = '/static/'
-
 # Africa's talking
 AFRICASTALKING_USERNAME = os.environ.setdefault('AFRICASTALKING_USERNAME', 'sandbox')
 AFRICASTALKING_API_KEY = os.environ.setdefault('AFRICASTALKING_API_KEY', 'AFRICASTALKING_API_KEY')

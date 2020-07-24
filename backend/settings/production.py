@@ -34,9 +34,6 @@ REST_FRAMEWORK = {
     ]
 }
 
-# Static files (CSS, JavaScript, Images)
-STATIC_URL = '/static/'
-
 # Africa's talking
 AFRICASTALKING_USERNAME = env('AFRICASTALKING_USERNAME')
 AFRICASTALKING_API_KEY = env('AFRICASTALKING_API_KEY')
