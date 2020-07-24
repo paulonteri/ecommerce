@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'products',
     'payments',
     'sms',
+    'frontend',
 ]
 
 MIDDLEWARE = [
