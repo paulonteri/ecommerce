@@ -1,0 +1,1 @@
+from backend.wsgi import application as app
