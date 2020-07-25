@@ -13,6 +13,7 @@ class CommonModelInfo(models.Model):
         abstract = True
 
 
+# TODO: Add display image
 class Category(CommonModelInfo):
     title = models.CharField(max_length=30, unique=True)
 
@@ -29,6 +30,7 @@ class Category(CommonModelInfo):
         return self.title
 
 
+# TODO: Add display image
 class SubCategory(CommonModelInfo):
     title = models.CharField(max_length=50, unique=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
@@ -46,6 +48,7 @@ class SubCategory(CommonModelInfo):
         return f'{self.title} of {self.category.title}'
 
 
+# TODO: Add display image
 class Brand(CommonModelInfo):
     title = models.CharField(max_length=30, unique=True)
 
@@ -56,6 +59,7 @@ class Brand(CommonModelInfo):
         return self.title
 
 
+# TODO: Add separate model to store the display images
 class Item(CommonModelInfo):
     title = models.CharField(max_length=100)
     price = models.FloatField()
