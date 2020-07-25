@@ -11,3 +11,7 @@ def catalog(request):
 
 def categories(request):
     return render(request, 'categories/index.html', {})
+
+
+def subcategory(request):
+    return render(request, 'categories/subcategory.html', {})
