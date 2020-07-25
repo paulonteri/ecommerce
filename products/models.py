@@ -16,6 +16,7 @@ class CommonModelInfo(models.Model):
 # TODO: Add display image
 class Category(CommonModelInfo):
     title = models.CharField(max_length=30, unique=True)
+    image = models.ImageField(upload_to='images/dynamic/products/categories', null=True)
 
     class Meta:
         verbose_name_plural = "Categories"
@@ -34,6 +35,7 @@ class Category(CommonModelInfo):
 class SubCategory(CommonModelInfo):
     title = models.CharField(max_length=50, unique=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='images/dynamic/products/subcategories', null=True)
 
     class Meta:
         verbose_name_plural = "Sub Categories"
@@ -51,6 +53,7 @@ class SubCategory(CommonModelInfo):
 # TODO: Add display image
 class Brand(CommonModelInfo):
     title = models.CharField(max_length=30, unique=True)
+    image = models.ImageField(upload_to='images/dynamic/products/brands', null=True)
 
     class Meta:
         ordering = ['title']
@@ -68,9 +71,7 @@ class Item(CommonModelInfo):
     brand = models.ForeignKey(Brand, on_delete=models.PROTECT)
     description = models.TextField()
     slug = models.SlugField()
-    # TODO : Manage media directories
-    # image = models.ImageField(upload_to='images/dynamic/products/items/')
-    image = models.ImageField()
+    image = models.ImageField(upload_to='images/dynamic/products/items/')
 
     class Meta:
         ordering = ['title']
