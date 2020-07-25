@@ -64,6 +64,8 @@ class Item(CommonModelInfo):
     brand = models.ForeignKey(Brand, on_delete=models.PROTECT)
     description = models.TextField()
     slug = models.SlugField()
+    # TODO : Manage media directories
+    # image = models.ImageField(upload_to='images/dynamic/products/items/')
     image = models.ImageField()
 
     class Meta:

@@ -9,12 +9,18 @@
     <link rel="stylesheet" href="{% static 'css/libs/uikit.min.css' %}">
 </head>
 <body>
+<header>
+    {% include "header_generic.html" %}
+</header>
     {% block sidebar %}<!-- insert default navigation text for every page -->{% endblock %}
     {% block content %}<!-- default content text (typically empty) -->{% endblock %}
     <script src="{% static 'js/libs/jquery-3.5.1.min.js' %}"></script>
     <script src="{% static 'js/index.js' %}"></script>
     <script src="{% static 'js/libs/uikit.min.js' %}"></script>
     <script src="{% static 'js/libs/uikit-icons.min.js' %}"></script>
+<footer>
+    {% include "footer_generic.html" %}
+</footer>
 </body>
 </html>
 
