@@ -1,4 +1,5 @@
 from os import listdir, path
+from termcolor import colored
 
 from django.conf import settings
 from django.core.files import File
@@ -12,12 +13,11 @@ brands_dir = images_dir + "/brands"
 categories_dir = images_dir + "/catalog"
 
 
-class Command(BaseCommand):
-    args = '<foo bar ...>'
-    help = 'Seed products to db'
+class Seed:
 
     def save_brands(self):
         files = listdir(brands_dir)
+        count = 0
 
         for i in files:
             file_path = brands_dir + "/" + i
@@ -33,8 +33,18 @@ class Command(BaseCommand):
             except Exception as e:
                 print("Error: \n" + str(e))
 
+            else:
+                count += 1
+
+        if count > 0:
+            print(colored("Successfully added "+str(count) +
+                          " Brands to the database...", "green"))
+        else:
+            print(colored("No Brands were added to the database...", "red"))
+
     def save_categories(self):
         files = listdir(categories_dir)
+        count = 0
 
         for i in files:
             file_path = categories_dir + "/" + i
@@ -44,12 +54,31 @@ class Command(BaseCommand):
 
                 with open(file_path, "rb") as f:
                     data = File(f)
-                    obj = Category(title=file_name.capitalize())
+                    obj = Category(title=file_name)
                     obj.image.save(i, data, save=True)
 
             except Exception as e:
                 print("Error: \n" + str(e))
 
-    def handle(self, *args, **options):
+            else:
+                count += 1
+
+        if count > 0:
+            print(colored("Successfully added "+str(count) +
+                          " Categories to the database...", "green"))
+        else:
+            print(colored("No Categories were added to the database...", "red"))
+
+    def save_all(self):
         self.save_brands()
         self.save_categories()
+
+
+class Command(BaseCommand):
+    args = '<foo bar ...>'
+    help = 'Seed products to db'
+
+    def handle(self, *args, **options):
+        print("Adding product information to the database...")
+        sd = Seed()
+        sd.save_all()

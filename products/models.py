@@ -7,16 +7,17 @@ class CommonModelInfo(models.Model):
     time_last_edited = models.DateTimeField(
         auto_now=True)
     #
-    last_edited_by = models.ForeignKey('accounts.User', null=True, blank=True, on_delete=models.SET_NULL)
+    last_edited_by = models.ForeignKey(
+        'accounts.User', null=True, blank=True, on_delete=models.SET_NULL)
 
     class Meta:
         abstract = True
 
 
-# TODO: Add display image
 class Category(CommonModelInfo):
     title = models.CharField(max_length=30, unique=True)
-    image = models.ImageField(upload_to='images/dynamic/products/categories', null=True)
+    image = models.ImageField(
+        upload_to='images/dynamic/products/categories', null=True)
 
     class Meta:
         verbose_name_plural = "Categories"
@@ -31,11 +32,11 @@ class Category(CommonModelInfo):
         return self.title
 
 
-# TODO: Add display image
 class SubCategory(CommonModelInfo):
     title = models.CharField(max_length=50, unique=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='images/dynamic/products/subcategories', null=True)
+    image = models.ImageField(
+        upload_to='images/dynamic/products/subcategories', null=True)
 
     class Meta:
         verbose_name_plural = "Sub Categories"
@@ -50,10 +51,10 @@ class SubCategory(CommonModelInfo):
         return f'{self.title} of {self.category.title}'
 
 
-# TODO: Add display image
 class Brand(CommonModelInfo):
     title = models.CharField(max_length=30, unique=True)
-    image = models.ImageField(upload_to='images/dynamic/products/brands', null=True)
+    image = models.ImageField(
+        upload_to='images/dynamic/products/brands', null=True)
 
     class Meta:
         ordering = ['title']
