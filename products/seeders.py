@@ -1,26 +1,34 @@
 from os import listdir, path
+from random import randint
 
 from django.conf import settings
-from django.core.files import File
+from django.core.files.images import ImageFile
 from termcolor import colored
 
 from products.models import Brand, Category, SubCategory
+from products.services.items import save_products
+from accounts.models import User
 
 # TODO: This is not flexible enough. Will improve
 # Paths
 base_dir = settings.BASE_DIR
-images_dir = base_dir + "/media/images/static"
-brands_dir = images_dir + "/brands"
-categories_dir = images_dir + "/catalog"
+images_dir = base_dir + "/media/images"
+products_dir = images_dir + "/seed_data/products"
+brands_dir = images_dir + "/static/brands"
+categories_dir = images_dir + "/static/catalog"
 # Values
-# [sub_category, category]
-categories_vars = ['tablets', 'consoles', 'smartphones', 'computers', 'phones',
-                   'photo', 'tv', 'games', 'laptops', 'cameras', 'watches']
-subcategories_vars_one = ['iPad', 'Xbox', 'Android', 'Desktop', 'Feature Phone',
-                          'Lenses', 'Smart TV', 'PS4', 'MacBook', 'DSLR', 'Wrist']
+# category
+category_vars = ['tablets', 'consoles', 'smartphones', 'computers', 'phones',
+                 'photo', 'tv', 'games', 'laptops', 'cameras', 'watches']
+# sub category
+subcategory_vars_one = ['iPad', 'Xbox', 'Android', 'Desktop', 'Feature Phone',
+                        'Lenses', 'Smart TV', 'PS4', 'MacBook', 'DSLR', 'Wrist']
+# product
+product_vars_one = ["iPad_Pro", "XBox_360", "Samsung_Galaxy_Note_10"]
 
 
 class Seed:
+    user = User.objects.all()[0]
 
     def save_brands(self):
         # Seed Brands
@@ -34,9 +42,9 @@ class Seed:
                 file_name = path.splitext(i)[0]
 
                 with open(file_path, "rb") as f:
-                    data = File(f)
+                    img = ImageFile(f)
                     obj = Brand(title=file_name.capitalize())
-                    obj.image.save(i, data, save=True)
+                    obj.image.save(i, img, save=True)
 
             except Exception as e:
                 print("Error: \n" + str(e))
@@ -62,9 +70,9 @@ class Seed:
                 file_name = path.splitext(i)[0]
 
                 with open(file_path, "rb") as f:
-                    data = File(f)
+                    img = ImageFile(f)
                     obj = Category(title=file_name)
-                    obj.image.save(i, data, save=True)
+                    obj.image.save(i, img, save=True)
 
             except Exception as e:
                 print("Error: \n" + str(e))
@@ -82,20 +90,22 @@ class Seed:
         # Seed SubCategories
         count = 0
         cat = Category.objects.all()
-        length = len(subcategories_vars_one)
+        length = len(subcategory_vars_one)
         q = 0
 
         while q < length:
-            q += 1
+            sub_cat_name = subcategory_vars_one[q]
             try:
                 obj = SubCategory(category=cat.get(
-                    title=categories_vars[q]), title=subcategories_vars_one[q])
+                    title=category_vars[q]), title=subcategory_vars_one[q])
                 obj.save()
             except Exception as e:
                 print("Error: \n" + str(e))
 
             else:
                 count += 1
+            finally:
+                q += 1
 
         if count > 0:
             print(colored("Successfully added " + str(count) +
@@ -103,7 +113,41 @@ class Seed:
         else:
             print(colored("No SubCategories were added to the database...", "red"))
 
+    def save_products(self):
+        # Seed Products
+        count = 0
+        brand = Brand.objects.all()
+        sub_cat = SubCategory.objects.all()
+        length = len(product_vars_one)
+        q = 0
+
+        while q < length:
+
+            prod_name = product_vars_one[q]
+            file_path = products_dir + "/" + str(prod_name) + ".jpeg"
+            try:
+                with open(file_path, "rb") as f:
+                    img = ImageFile(f)
+                    save_products(title=prod_name.replace("_", " "), price=randint(9999, 999999),
+                                  sub_category_id=sub_cat[q].id, brand_id=brand[q].id,
+                                  description=prod_name.replace("_", " ") + "...", slug='_' + prod_name, image=img,
+                                  user_id=self.user.id)
+            except Exception as e:
+                print("Error: \n" + str(e))
+
+            else:
+                count += 1
+            finally:
+                q += 1
+
+        if count > 0:
+            print(colored("Successfully added " + str(count) +
+                          " Products to the database...", "green"))
+        else:
+            print(colored("No Products were added to the database...", "red"))
+
     def save_all(self):
         self.save_brands()
         self.save_categories()
         self.save_subcategories()
+        self.save_products()
