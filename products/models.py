@@ -71,7 +71,7 @@ class Item(CommonModelInfo):
     sub_category = models.ForeignKey(SubCategory, on_delete=models.PROTECT)
     brand = models.ForeignKey(Brand, on_delete=models.PROTECT)
     description = models.TextField()
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True)
     image = models.ImageField(upload_to='images/dynamic/products/items/')
 
     class Meta:
