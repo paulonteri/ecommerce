@@ -13,3 +13,4 @@ handlers:
     static_dir: static/
   - url: .*
     script: auto
+# python manage.py collectstatic && gcloud app deploy
