@@ -35,7 +35,8 @@ class UserManager(BaseUserManager):
         return self._create_user(username, email, password, False, False, False, **extra_fields)
 
     def create_superuser(self, username, email, password, **extra_fields):
-        user = self._create_user(username, email, password, True, True, True, **extra_fields)
+        user = self._create_user(
+            username, email, password, True, True, True, **extra_fields)
         return user
 
 
@@ -43,13 +44,17 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(verbose_name="email", max_length=60, unique=True)
     username = models.CharField(max_length=25, unique=True)
-    date_joined = models.DateTimeField(verbose_name="date joined", auto_now_add=True)
+    date_joined = models.DateTimeField(
+        verbose_name="date joined", auto_now_add=True)
     last_login = models.DateTimeField(verbose_name="last login", auto_now=True)
     email_confirmed = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
+    # TODO:
+    # is_customer = models.BooleanField(default=False)
+    # is_merchant = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
@@ -83,7 +88,8 @@ class Address(models.Model):
     zip = models.CharField(max_length=100)
     address_type = models.CharField(max_length=1, choices=ADDRESS_CHOICES)
     default = models.BooleanField(default=False)
-    phone_number = models.CharField(max_length=13, validators=[validate_kenyan_phone])
+    phone_number = models.CharField(
+        max_length=13, validators=[validate_kenyan_phone])
     country = CountryField(multiple=False)
     #
     time_added = models.DateTimeField(auto_now_add=True)
