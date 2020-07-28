@@ -23,8 +23,11 @@ category_vars = ['tablets', 'consoles', 'smartphones', 'computers', 'phones',
 # sub category
 subcategory_vars_one = ['iPad', 'Xbox', 'Android', 'Desktop', 'Feature Phone',
                         'Lenses', 'Smart TV', 'PS4', 'MacBook', 'DSLR', 'Wrist']
+# brands
+brands_vars = ["Apple", "Microsoft", "Samsung", "Hp"]
 # product
-product_vars_one = ["iPad_Pro", "XBox_360", "Samsung_Galaxy_Note_10"]
+product_vars_one = ["iPad_Pro", "XBox_360",
+                    "Samsung_Galaxy_Note_10", "HP_Omen"]
 
 
 class Seed:
@@ -116,8 +119,6 @@ class Seed:
     def save_products(self):
         # Seed Products
         count = 0
-        brand = Brand.objects.all()
-        sub_cat = SubCategory.objects.all()
         length = len(product_vars_one)
         q = 0
 
@@ -125,11 +126,19 @@ class Seed:
 
             prod_name = product_vars_one[q]
             file_path = products_dir + "/" + str(prod_name) + ".jpeg"
+
+            all_sub_cat = SubCategory.objects.all()
+            all_brands = Brand.objects.all()
+
             try:
+                sub_cat = all_sub_cat.get(
+                    title__exact=subcategory_vars_one[q].lower())
+                brand = all_brands.get(title__exact=brands_vars[q])
+                #
                 with open(file_path, "rb") as f:
                     img = ImageFile(f)
                     save_products(title=prod_name.replace("_", " "), price=randint(9999, 999999),
-                                  sub_category_id=sub_cat[q].id, brand_id=brand[q].id,
+                                  sub_category_id=sub_cat.id, brand_id=brand.id,
                                   description=prod_name.replace("_", " ") + "...", slug='_' + prod_name, image=img,
                                   user_id=self.user.id)
             except Exception as e:
