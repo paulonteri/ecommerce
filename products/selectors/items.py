@@ -3,7 +3,7 @@ from django.db.models.query import QuerySet
 
 from django.core.validators import validate_slug
 
-from products.models import Item
+from products.models import Item, Brand
 
 
 def get_items() -> QuerySet:
@@ -14,15 +14,15 @@ def get_items() -> QuerySet:
     return items
 
 
-def get_homepage_items() -> QuerySet:
+def get_homepage_items() -> dict:
     """
-    The function that will return the featured items tobe displayed on the homepage.
-    :returns: items: A Queryset containing items.
+    The function that will return the featured items, brands to be displayed on the homepage.
+    :returns: items: A dict containing trending items & brands.
     """
-    items = Item.objects.order_by("-time_last_edited")[:4].only(
+    # ITEMS
+    items = Item.objects.all().order_by("-time_last_edited")[:12].only(
         "title", "price", "discount_price", "slug", "description",
         "image", "brand__title", "sub_category__title")
-
     # Top selling
     top_selling = True
     for obj in items:
@@ -30,7 +30,15 @@ def get_homepage_items() -> QuerySet:
         obj.top_selling = top_selling
         top_selling = not top_selling
 
-    return items
+    # BRANDS
+    brands = Brand.objects.all().order_by("-time_last_edited")[:15]
+
+    data = {
+        "trending_items": items,
+        "trending_brands": brands
+    }
+
+    return data
 
 
 def get_item_detail(item_slug: str) -> Item:
