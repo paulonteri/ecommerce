@@ -873,6 +873,88 @@
                                 </div>
                             </div>
                         </article>
+
+                        {#     <------------------------------------------ Product Item ----------------------------------------------->   #}
+                        {% if display_items %}
+
+                            {% for item in display_items %}
+                                <article class="tm-product-card uk-first-column">
+                                    {#          <----------------------------- Images ----------------------->   #}
+                                    <div class="tm-product-card-media">
+                                        <div class="tm-ratio tm-ratio-4-3">
+                                            <a class="tm-media-box" href="/products/product{{ item.slug }}">
+                                                {#          <---------- Promo --------->   #}
+                                                {% if item.top_selling %}
+                                                    <div class="tm-product-card-labels">
+                                                        <span class="uk-label uk-label-warning">top selling</span>
+                                                    </div>
+                                                {% endif %}
+                                                {#          <---------- End Promo --------->   #}
+                                                {#          <---------- Image --------->   #}
+                                                <figure class="tm-media-box-wrap">
+                                                    <img src="{{ item.image.url }}"
+                                                         alt="{{ item.title }}| Ecommerce Site"/>
+                                                </figure>
+                                                {#          <---------- End Image --------->   #}
+                                            </a>
+                                        </div>
+                                    </div>
+                                    {#          <------------------------------------ End Images --------------------------->   #}
+                                    {#          <----------------------------------- Description ------------------------->   #}
+                                    <div class="tm-product-card-body">
+                                        <div class="tm-product-card-info">
+                                            {#          <---------- Category --------->   #}
+                                            <div class="uk-text-meta uk-margin-xsmall-bottom">{{ item.sub_category__title }}</div>
+                                            {#          <---------- Name --------->   #}
+                                            <h3 class="tm-product-card-title">
+                                                <a class="uk-link-heading"
+                                                   href="/products/product/{{ item.slug }}">{{ item.title }}</a>
+                                            </h3>
+                                        </div>
+                                        <div class="tm-product-card-shop">
+                                            {#          <---------- Prices --------->   #}
+                                            <div class="tm-product-card-prices">
+                                                <del class="uk-text-meta">$1899.00</del>
+                                                <div class="tm-product-card-price">{{ item.price }}</div>
+                                            </div>
+                                            {#          <---------- Icons: Add to Cart e.t.c... --------->   #}
+                                            <div class="tm-product-card-add">
+                                                <div class="uk-text-meta tm-product-card-actions">
+                                                    <a class="tm-product-card-action js-add-to js-add-to-favorites tm-action-button-active js-added-to"
+                                                       title="Add to favorites"><span uk-icon="icon: heart; ratio: .75;"
+                                                                                      class="uk-icon"><svg width="15"
+                                                                                                           height="15"
+                                                                                                           viewBox="0 0 20 20"
+                                                                                                           xmlns="http://www.w3.org/2000/svg"
+                                                                                                           data-svg="heart"><path
+                                                            fill="none" stroke="#000" stroke-width="1.03"
+                                                            d="M10,4 C10,4 8.1,2 5.74,2 C3.38,2 1,3.55 1,6.73 C1,8.84 2.67,10.44 2.67,10.44 L10,18 L17.33,10.44 C17.33,10.44 19,8.84 19,6.73 C19,3.55 16.62,2 14.26,2 C11.9,2 10,4 10,4 L10,4 Z"></path></svg></span><span
+                                                            class="tm-product-card-action-text">Add to favorites</span></a>
+                                                </div>
+                                                <button class="uk-button uk-button-primary tm-product-card-add-button tm-shine js-add-to-cart">
+                                            <span class="tm-product-card-add-button-icon uk-icon" uk-icon="cart"><svg
+                                                    width="20" height="20" viewBox="0 0 20 20"
+                                                    xmlns="http://www.w3.org/2000/svg" data-svg="cart"><circle cx="7.3"
+                                                                                                               cy="17.3"
+                                                                                                               r="1.4"></circle><circle
+                                                    cx="13.3" cy="17.3" r="1.4"></circle><polyline fill="none"
+                                                                                                   stroke="#000"
+                                                                                                   points="0 2 3.2 4 5.3 12.5 16 12.5 18 6.5 8 6.5"></polyline></svg></span><span
+                                                        class="tm-product-card-add-button-text">add to cart</span>
+                                                </button>
+                                                {#          <---------- End Icons --------->   #}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {#          <------------------------ End Description -------------------->   #}
+                                </article>
+                            {% endfor %}
+
+                        {% else %}
+                            <p>There are no products in the store.</p>
+                        {% endif %}
+
+                        {#     <--------------------------------------------------- End Product ----------------------------------------------->   #}
                     </div>
                 </div>
                 <div class="uk-margin uk-text-center">
@@ -1415,15 +1497,4 @@
             </div>
         </section>
     </main>
-    <div>
-        {% if display_items %}
-            <ul>
-                {% for item in display_items %}
-                    <li>{{ item.title }}</li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>There are no products in the store.</p>
-        {% endif %}
-    </div>
 {% endblock %}
