@@ -1,4 +1,4 @@
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.shortcuts import render
 
 from products.models import Item
@@ -9,7 +9,6 @@ def product_detail(request, item_slug):
     """
     Renders the Product Detail Page
     """
-
     try:
         item_info = get_item_full_detail(item_slug)
 
@@ -29,7 +28,7 @@ def product_detail(request, item_slug):
 
 
 def index(request):
-    return render(request, 'products/index.html', {})
+    return HttpResponse("Product")
 
 
 def catalog(request):
