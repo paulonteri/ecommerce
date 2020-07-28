@@ -8,21 +8,16 @@
                             <li><a href="/">Home</a></li>
                             <li><a href="/products/catalog">Catalog</a></li>
                             <li>
-                                <a href="/products/catalog/categories">Laptops &amp; Tablets</a>
+                                <a href="/products/catalog/categories">{{ item.sub_category_category_title }}</a>
                             </li>
                             <li>
-                                <a href="/products/catalog/categories/subcategory">Laptops</a>
+                                <a href="/products/catalog/categories/subcategory">{{ item.sub_category_title }}</a>
                             </li>
                             <li>
-              <span
-              >Apple MacBook Pro 15&quot; Touch Bar MPTU2LL/A 256GB
-                (Silver)</span
-              >
+                                <span>{{ item.title }}</span>
                             </li>
                         </ul>
-                        <h1 class="uk-margin-small-top uk-margin-remove-bottom">
-                            Apple MacBook Pro 15&quot; Touch Bar MPTU2LL/A 256GB (Silver)
-                        </h1>
+                        <h1 class="uk-margin-small-top uk-margin-remove-bottom">{{ item.title }}</h1>
                     </div>
                     <div>
                         <div class="uk-grid-medium uk-child-width-1-1" uk-grid>
@@ -45,12 +40,12 @@
                                                         <li>
                                                             <a
                                                                     class="uk-card-body tm-media-box tm-media-box-zoom"
-                                                                    href="images/products/1/1-large.jpg"
+                                                                    href="{{ item.image.url }}"
                                                             >
                                                                 <figure class="tm-media-box-wrap">
                                                                     <img
-                                                                            src="/media/images/static/products/1/1-large.jpg"
-                                                                            alt='Apple MacBook Pro 15" Touch Bar MPTU2LL/A 256GB (Silver)'
+                                                                            src="{{ item.image.url }}"
+                                                                            alt='{{ item.title }} | {{ website_name }}'
                                                                     /></figure
                                                                 >
                                                             </a>
@@ -125,8 +120,8 @@
                                                                                     >
                                                                                         <figure class="tm-media-box-wrap">
                                                                                             <img
-                                                                                                    src="/media/images/static/products/1/1-small.jpg"
-                                                                                                    alt='Apple MacBook Pro 15" Touch Bar MPTU2LL/A 256GB (Silver)'
+                                                                                                    src="{{ item.image.url }}"
+                                                                                                    alt='{{ item.title }} | {{ website_name }}'
                                                                                             /></figure
                                                                                         >
                                                                                     </a>
@@ -221,10 +216,10 @@
                                         <div class="uk-width-1-1 uk-width-1-3@m tm-product-info">
                                             <div class="uk-card-body">
                                                 <div>
-                                                    <a href="#" title="Apple"
+                                                    <a href="#" title="{{ item.brand_title }}"
                                                     ><img
-                                                            src="/media/images/static/brands/apple.svg"
-                                                            alt="Apple"
+                                                            src="{{ item.brand_image_url }}"
+                                                            alt="{{ item.brand_title }} | {{ website_name }}"
                                                             style="height: 40px;"
                                                     /></a>
                                                 </div>

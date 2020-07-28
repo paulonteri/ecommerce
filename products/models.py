@@ -14,6 +14,7 @@ class CommonModelInfo(models.Model):
         abstract = True
 
 
+# TODO: Add slug
 class Category(CommonModelInfo):
     title = models.CharField(max_length=30, unique=True)
     image = models.ImageField(
@@ -32,6 +33,7 @@ class Category(CommonModelInfo):
         return self.title
 
 
+# TODO: Add slug
 class SubCategory(CommonModelInfo):
     title = models.CharField(max_length=50, unique=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
@@ -51,6 +53,7 @@ class SubCategory(CommonModelInfo):
         return f'{self.title} of {self.category.title}'
 
 
+# TODO: Add slug
 class Brand(CommonModelInfo):
     title = models.CharField(max_length=30, unique=True)
     image = models.ImageField(
