@@ -8,7 +8,7 @@ from products.models import Category, Item
 def get_categories_ave_cost(categories: QuerySet) -> QuerySet:
     """
     :param categories: products.models.Category Queryset
-    :return: Average cost of category
+    :return: Average cost of each category
     """
     items = Item.objects.all()
     price = 0

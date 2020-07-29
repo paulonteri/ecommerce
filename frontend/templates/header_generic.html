@@ -340,225 +340,63 @@
                                 </div>
                             </div>
                         </li>
-                        <li>
-                            <a href="brands.html"
-                            >Brands<span
-                                    class="uk-margin-xsmall-left"
-                                    uk-icon="icon: chevron-down; ratio: .75;"
-                            ></span
-                            ></a>
-                            <div
-                                    class="uk-navbar-dropdown uk-margin-remove uk-padding-remove-vertical"
-                                    uk-drop="pos: bottom-justify;delay-show: 125;delay-hide: 50;duration: 75;boundary: .tm-navbar-container;boundary-align: true;pos: bottom-justify;flip: x"
-                            >
+                        {#             <-------------------------------- Brands ---------------------------------->           #}
+                        {% if trending_brands %}
+                            <li>
+                                <a href="brands.html"
+                                >Brands<span
+                                        class="uk-margin-xsmall-left"
+                                        uk-icon="icon: chevron-down; ratio: .75;"
+                                ></span
+                                ></a>
                                 <div
-                                        class="uk-container uk-container-small uk-margin-top uk-margin-bottom"
+                                        class="uk-navbar-dropdown uk-margin-remove uk-padding-remove-vertical"
+                                        uk-drop="pos: bottom-justify;delay-show: 125;delay-hide: 50;duration: 75;boundary: .tm-navbar-container;boundary-align: true;pos: bottom-justify;flip: x"
                                 >
-                                    <ul class="uk-grid-small uk-child-width-1-6" uk-grid>
-                                        <li>
-                                            <div class="tm-ratio tm-ratio-4-3">
-                                                <a
-                                                        class="uk-link-muted uk-text-center uk-display-block uk-padding-small uk-box-shadow-hover-large tm-media-box"
-                                                        href="#"
-                                                        title="Apple"
-                                                >
-                                                    <figure class="tm-media-box-wrap">
-                                                        <img
-                                                                src="/media/images/static/brands/apple.svg"
-                                                                alt="Apple"
-                                                        /></figure
-                                                    >
-                                                </a>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="tm-ratio tm-ratio-4-3">
-                                                <a
-                                                        class="uk-link-muted uk-text-center uk-display-block uk-padding-small uk-box-shadow-hover-large tm-media-box"
-                                                        href="#"
-                                                        title="Samsung"
-                                                >
-                                                    <figure class="tm-media-box-wrap">
-                                                        <img
-                                                                src="/media/images/static/brands/samsung.svg"
-                                                                alt="Samsung"
-                                                        /></figure
-                                                    >
-                                                </a>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="tm-ratio tm-ratio-4-3">
-                                                <a
-                                                        class="uk-link-muted uk-text-center uk-display-block uk-padding-small uk-box-shadow-hover-large tm-media-box"
-                                                        href="#"
-                                                        title="Sony"
-                                                >
-                                                    <figure class="tm-media-box-wrap">
-                                                        <img
-                                                                src="/media/images/static/brands/sony.svg"
-                                                                alt="Sony"
-                                                        /></figure
-                                                    >
-                                                </a>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="tm-ratio tm-ratio-4-3">
-                                                <a
-                                                        class="uk-link-muted uk-text-center uk-display-block uk-padding-small uk-box-shadow-hover-large tm-media-box"
-                                                        href="#"
-                                                        title="Microsoft"
-                                                >
-                                                    <figure class="tm-media-box-wrap">
-                                                        <img
-                                                                src="/media/images/static/brands/microsoft.svg"
-                                                                alt="Microsoft"
-                                                        /></figure
-                                                    >
-                                                </a>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="tm-ratio tm-ratio-4-3">
-                                                <a
-                                                        class="uk-link-muted uk-text-center uk-display-block uk-padding-small uk-box-shadow-hover-large tm-media-box"
-                                                        href="#"
-                                                        title="Intel"
-                                                >
-                                                    <figure class="tm-media-box-wrap">
-                                                        <img
-                                                                src="/media/images/static/brands/intel.svg"
-                                                                alt="Intel"
-                                                        /></figure
-                                                    >
-                                                </a>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="tm-ratio tm-ratio-4-3">
-                                                <a
-                                                        class="uk-link-muted uk-text-center uk-display-block uk-padding-small uk-box-shadow-hover-large tm-media-box"
-                                                        href="#"
-                                                        title="HP"
-                                                >
-                                                    <figure class="tm-media-box-wrap">
-                                                        <img
-                                                                src="/media/images/static/brands/hp.svg"
-                                                                alt="HP"
-                                                        /></figure
-                                                    >
-                                                </a>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="tm-ratio tm-ratio-4-3">
-                                                <a
-                                                        class="uk-link-muted uk-text-center uk-display-block uk-padding-small uk-box-shadow-hover-large tm-media-box"
-                                                        href="#"
-                                                        title="LG"
-                                                >
-                                                    <figure class="tm-media-box-wrap">
-                                                        <img
-                                                                src="/media/images/static/brands/lg.svg"
-                                                                alt="LG"
-                                                        /></figure
-                                                    >
-                                                </a>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="tm-ratio tm-ratio-4-3">
-                                                <a
-                                                        class="uk-link-muted uk-text-center uk-display-block uk-padding-small uk-box-shadow-hover-large tm-media-box"
-                                                        href="#"
-                                                        title="Lenovo"
-                                                >
-                                                    <figure class="tm-media-box-wrap">
-                                                        <img
-                                                                src="/media/images/static/brands/lenovo.svg"
-                                                                alt="Lenovo"
-                                                        /></figure
-                                                    >
-                                                </a>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="tm-ratio tm-ratio-4-3">
-                                                <a
-                                                        class="uk-link-muted uk-text-center uk-display-block uk-padding-small uk-box-shadow-hover-large tm-media-box"
-                                                        href="#"
-                                                        title="ASUS"
-                                                >
-                                                    <figure class="tm-media-box-wrap">
-                                                        <img
-                                                                src="/media/images/static/brands/asus.svg"
-                                                                alt="ASUS"
-                                                        /></figure
-                                                    >
-                                                </a>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="tm-ratio tm-ratio-4-3">
-                                                <a
-                                                        class="uk-link-muted uk-text-center uk-display-block uk-padding-small uk-box-shadow-hover-large tm-media-box"
-                                                        href="#"
-                                                        title="Acer"
-                                                >
-                                                    <figure class="tm-media-box-wrap">
-                                                        <img
-                                                                src="/media/images/static/brands/acer.svg"
-                                                                alt="Acer"
-                                                        /></figure
-                                                    >
-                                                </a>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="tm-ratio tm-ratio-4-3">
-                                                <a
-                                                        class="uk-link-muted uk-text-center uk-display-block uk-padding-small uk-box-shadow-hover-large tm-media-box"
-                                                        href="#"
-                                                        title="Dell"
-                                                >
-                                                    <figure class="tm-media-box-wrap">
-                                                        <img
-                                                                src="/media/images/static/brands/dell.svg"
-                                                                alt="Dell"
-                                                        /></figure
-                                                    >
-                                                </a>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="tm-ratio tm-ratio-4-3">
-                                                <a
-                                                        class="uk-link-muted uk-text-center uk-display-block uk-padding-small uk-box-shadow-hover-large tm-media-box"
-                                                        href="#"
-                                                        title="Canon"
-                                                >
-                                                    <figure class="tm-media-box-wrap">
-                                                        <img
-                                                                src="/media/images/static/brands/canon.svg"
-                                                                alt="Canon"
-                                                        /></figure
-                                                    >
-                                                </a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <div class="uk-text-center uk-margin">
-                                        <a
-                                                class="uk-link-muted uk-text-uppercase tm-link-to-all"
-                                                href="brands.html"
-                                        ><span>See all brands</span
-                                        ><span uk-icon="icon: chevron-right; ratio: .75;"></span
-                                        ></a>
+                                    <div
+                                            class="uk-container uk-container-small uk-margin-top uk-margin-bottom"
+                                    >
+                                        <ul class="uk-grid-small uk-child-width-1-6" uk-grid>
+                                            {#          <----------------------------- *** ----------------------->   #}
+                                            {% for brand in trending_brands %}
+                                                <li>
+                                                    <div class="tm-ratio tm-ratio-4-3">
+                                                        <a
+                                                                class="uk-link-muted uk-text-center uk-display-block uk-padding-small uk-box-shadow-hover-large tm-media-box"
+                                                                href="#"
+                                                                title="{{ brand.title }}"
+                                                        >
+                                                            <figure class="tm-media-box-wrap">
+                                                                <img
+                                                                        src="{{ brand.image.url }}"
+                                                                        alt="{{ brand.title }} from {{ website_name }}"
+                                                                /></figure
+                                                            >
+                                                        </a>
+                                                    </div>
+                                                </li>
+
+                                            {% endfor %}
+                                            {#          <----------------------------- *** ----------------------->   #}
+
+                                        </ul>
+                                        <div class="uk-text-center uk-margin">
+                                            <a
+                                                    class="uk-link-muted uk-text-uppercase tm-link-to-all"
+                                                    href="brands.html"
+                                            ><span>See all brands</span
+                                            ><span uk-icon="icon: chevron-right; ratio: .75;"></span
+                                            ></a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </li>
+                            </li>
+                        {% else %}
+                            <p>There are no registered brands</p>
+
+                        {% endif %}
+
+                        {#      <--------------------------------  End Brands ---------------------------------->           #}
                         <li>
                             <a href="#"
                             >Pages<span
