@@ -3,7 +3,9 @@ from django.db.models.query import QuerySet
 
 from django.core.validators import validate_slug
 
-from products.models import Item, Brand
+from products.models import Item, Brand, Category
+
+from products.decorators import debugger_queries
 
 
 def get_items() -> QuerySet:
@@ -33,12 +35,21 @@ def get_homepage_items() -> dict:
     # BRANDS
     brands = Brand.objects.all().order_by("-time_last_edited")[:15]
 
+    # CATEGORIES
+    categories = Category.objects.all().order_by("-time_last_edited")[:6]
+
     data = {
         "trending_items": items,
-        "trending_brands": brands
+        "trending_brands": brands,
+        "categories": categories
     }
 
     return data
+
+
+def debugger_get_homepage_items():
+    """Run debugger queries for get_homepage_items function."""
+    return debugger_queries(get_homepage_items)()
 
 
 def get_item_detail(item_slug: str) -> Item:
