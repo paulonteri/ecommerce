@@ -5,9 +5,9 @@ from django.conf import settings
 from django.core.files.images import ImageFile
 from termcolor import colored
 
+from accounts.models import User
 from products.models import Brand, Category, SubCategory
 from products.services.items import save_products
-from accounts.models import User
 
 # TODO: This is not flexible enough. Will improve
 # Paths
@@ -22,12 +22,12 @@ category_vars = ['tablets', 'consoles', 'smartphones', 'computers', 'phones',
                  'photo', 'tv', 'games', 'laptops', 'cameras', 'watches']
 # sub category
 subcategory_vars_one = ['iPad', 'Xbox', 'Android', 'Desktop', 'Feature Phone',
-                        'Lenses', 'Smart TV', 'PS4', 'MacBook', 'DSLR', 'Wrist']
+                        'Lenses', 'Smart TV', 'Play Station', 'MacBook', 'DSLR', 'Wrist']
 # brands
-brands_vars = ["Apple", "Microsoft", "Samsung", "Hp"]
+brands_vars_one = ["Apple", "Microsoft", "Samsung", "Hp", "Lg", "Canon", "Asus", "Sony", "Apple", "Canon", "Samsung"]
 # product
-product_vars_one = ["iPad_Pro", "XBox_360",
-                    "Samsung_Galaxy_Note_10", "HP_Omen"]
+product_vars_one = ["iPad_Pro", "XBox_360", "Samsung_Galaxy_Note_10", "HP_Omen", "LG_Feature_Phone",
+                    "Canon_Lens", "Asus_TV", "Play_Station_4", "MacBook_Air", "Canon_Camera", "Samsung_Gear"]
 
 
 class Seed:
@@ -133,7 +133,7 @@ class Seed:
             try:
                 sub_cat = all_sub_cat.get(
                     title__exact=subcategory_vars_one[q].lower())
-                brand = all_brands.get(title__exact=brands_vars[q])
+                brand = all_brands.get(title__exact=brands_vars_one[q])
                 #
                 with open(file_path, "rb") as f:
                     img = ImageFile(f)
