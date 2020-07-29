@@ -8,7 +8,8 @@ def index(request):
 
     context = {
         'display_items': data["trending_items"],
-        "brands": data["trending_brands"]
+        "brands": data["trending_brands"],
+        "categories": data["trending_categories"]
     }
 
     return render(request, 'home/index.html', context=context)

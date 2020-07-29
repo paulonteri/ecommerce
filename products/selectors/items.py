@@ -6,6 +6,7 @@ from django.core.validators import validate_slug
 from products.models import Item, Brand, Category
 
 from products.decorators import debugger_queries
+from products.selectors.catagories import get_categories_ave_cost
 
 
 def get_items() -> QuerySet:
@@ -36,12 +37,14 @@ def get_homepage_items() -> dict:
     brands = Brand.objects.all().order_by("-time_last_edited")[:15]
 
     # CATEGORIES
-    categories = Category.objects.all().order_by("-time_last_edited")[:6]
+    categories = get_categories_ave_cost(Category.objects.all().order_by("-time_last_edited"))
+    for i in categories:
+        print(i.average_cost)
 
     data = {
         "trending_items": items,
         "trending_brands": brands,
-        "categories": categories
+        "trending_categories": categories
     }
 
     return data
