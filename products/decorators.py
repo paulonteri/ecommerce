@@ -19,9 +19,7 @@ def debugger_queries(func):
         end = time.time()
         end_queries = len(connection.queries)
 
-        print("queries:", end_queries - start_queries)
-        print("queries:", start_queries)
-        print("queries:", end_queries)
+        print("total queries:", end_queries - start_queries)
         print("took: %.2fs" % (end - start))
         return result
 

@@ -111,3 +111,8 @@ def get_item_full_detail(item_slug: str) -> dict:
     }
 
     return item_info
+
+
+def debugger_get_item_full_detail(slug):
+    """Run debugger queries for get_item_full_detail function."""
+    return debugger_queries(get_item_full_detail)(slug)
