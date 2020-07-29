@@ -33,17 +33,11 @@ def get_homepage_items() -> dict:
         obj.top_selling = top_selling
         top_selling = not top_selling
 
-    # BRANDS
-    brands = Brand.objects.all().order_by("-time_last_edited")[:15]
-
     # CATEGORIES
     categories = get_categories_ave_cost(Category.objects.all().order_by("-time_last_edited"))
-    for i in categories:
-        print(i.average_cost)
 
     data = {
         "trending_items": items,
-        "trending_brands": brands,
         "trending_categories": categories
     }
 
