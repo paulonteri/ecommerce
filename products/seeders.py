@@ -44,7 +44,7 @@ product_vars_two = ["Microsoft_Surface", "Play_Station_4", "MacBook_Air", "Samsu
                     "Canon_Camera", "LG_LED_TV", "GTA_V", "Apple_Watch_3"]
 #
 brand_vars_three = ["Intel", "Dell", "Apple", "Apple",
-                    "Sony", "Lenovo", "Sony", "Asus"]
+                    "Sony", "Lenovo", "Microsoft", "Asus"]
 
 subcategory_vars_three = ["Intel Notebook", "Alienware", 'MacBook', "iPhone",
                           'CyberShot Camera', "4K TV", "XBox", "Health"]
