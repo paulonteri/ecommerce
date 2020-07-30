@@ -5,6 +5,8 @@
 env/
 .env
 
+gcloud_credentials.json
+
 ### Django ###
 *.log
 *.pot

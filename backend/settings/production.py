@@ -1,5 +1,6 @@
 from backend.settings.base import *
 from environs import Env
+from google.oauth2 import service_account
 
 env = Env()
 
@@ -78,3 +79,13 @@ TEMPLATE_LOADERS = (
 )
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+
+# Storage
+DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+GS_BUCKET_NAME = env("GS_BUCKET_NAME")
+GS_LOCATION = env("GS_LOCATION")
+GS_DEFAULT_ACL = env("GS_DEFAULT_ACL")
+GS_FILE_OVERWRITE = False
+GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
+    BASE_DIR + "/backend/settings/gcloud_credentials.json"
+)
