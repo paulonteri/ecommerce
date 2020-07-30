@@ -32,7 +32,7 @@ product_vars_one = ["iPad_Pro", "XBox_360", "Samsung_Galaxy_Note_10", "HP_Omen",
 
 
 class Seed:
-    user = User.objects.all()[0]
+    user = User.objects.all()
 
     def save_brands(self):
         # Seed Brands
@@ -141,7 +141,7 @@ class Seed:
                     save_products(title=prod_name.replace("_", " "), price=randint(9999, 999999),
                                   sub_category_id=sub_cat.id, brand_id=brand.id,
                                   description=prod_name.replace("_", " ") + "...", slug='_' + prod_name, image=img,
-                                  user_id=self.user.id)
+                                  user_id=self.user[0].id)
             except Exception as e:
                 print("Error: \n" + str(e))
 
@@ -157,6 +157,7 @@ class Seed:
             print(colored("No Products were added to the database...", "red"))
 
     def save_all(self):
+        print(colored("Seeding Products...", "magenta"))
         self.save_brands()
         self.save_categories()
         self.save_subcategories()
