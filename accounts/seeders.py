@@ -1,7 +1,5 @@
 from accounts.models import User
 
-user(1, "one@example.com", 1)
-
 
 class Seed:
     admins = 0
