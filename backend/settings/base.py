@@ -23,6 +23,8 @@ INSTALLED_APPS = [
     'payments',
     'sms',
     'frontend',
+    # always last
+    'django_cleanup.apps.CleanupConfig',
 ]
 
 MIDDLEWARE = [
