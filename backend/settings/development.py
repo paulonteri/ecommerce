@@ -69,3 +69,5 @@ TEMPLATE_LOADERS = (
 )
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "./media")
