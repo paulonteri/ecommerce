@@ -18,8 +18,6 @@ local_settings.py
 db.sqlite3
 
 media/
-media/images/dynamic
-media/videos/dynamic
 /static
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/

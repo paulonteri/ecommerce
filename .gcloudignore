@@ -14,6 +14,10 @@
 .gitignore
 
 /env
+media/
+seed_data/
+db.sqlite3
+.env
 
 # Python pycache:
 __pycache__/

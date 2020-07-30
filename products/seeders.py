@@ -12,27 +12,44 @@ from products.services.items import save_products
 # TODO: This is not flexible enough. Will improve
 # Paths
 base_dir = settings.BASE_DIR
-images_dir = base_dir + "/media/images"
-products_dir = images_dir + "/seed_data/products"
-brands_dir = images_dir + "/static/brands"
-categories_dir = images_dir + "/static/catalog"
+images_dir = base_dir + "/seed_data/images"
+products_dir = images_dir + "/products"
+brands_dir = images_dir + "/brands"
+categories_dir = images_dir + "/categories"
 # Values
-# category
-category_vars = ['tablets', 'consoles', 'smartphones', 'computers', 'phones',
-                 'photo', 'tv', 'games', 'laptops', 'cameras', 'watches']
+
 # brands
-brands = ["Apple", "Microsoft", "Samsung", "Hp", "Lg", "Canon", "Asus", "Sony", "Apple", "Canon", "Samsung"]
+all_brands = ["Apple", "Microsoft", "Samsung", "Hp", "Lg",
+              "Canon", "Asus", "Sony", "Apple", "Canon", "Samsung"]
 
-# sub category
-subcategory_vars_one = ['iPad', 'Xbox', 'Android', 'Desktop', 'Feature Phone',
-                        'Lenses', 'Smart TV', 'Play Station', 'MacBook', 'DSLR', 'Wrist']
-# product
-product_vars_one = ["iPad_Pro", "XBox_360", "Samsung_Galaxy_Note_10", "HP_Omen", "LG_Feature_Phone",
-                    "Canon_Lens", "Asus_TV", "Play_Station_4", "MacBook_Air", "Canon_Camera", "Samsung_Gear"]
+category_vars = ['tablets', 'consoles', 'computers',
+                 'phones', 'photo', 'tv', 'games', 'watches']
 
+brand_vars_one = ["Apple", "Microsoft", "Hp", "Lg",
+                  "Canon", "Asus", "Sony", "Samsung"]
+
+subcategory_vars_one = ['iPad', 'Xbox', 'Desktop', 'Feature Phone',
+                        'Lenses', 'Smart TV', 'Play Station', 'Smart Watch']
+
+product_vars_one = ["iPad_Pro", "XBox_360", "HP_Omen", "LG_Feature_Phone",
+                    "Canon_Lens", "Asus_TV", "The_Witcher", "Samsung_Gear"]
+
+brand_vars_two = ["Microsoft", "Sony", "Apple", "Samsung",
+                  "Canon", "Lg", "Sony", "Apple"]
+
+subcategory_vars_two = ["Surface", "Play Station", 'MacBook',
+                        "Android", 'DSLR Camera', "LED TV", "PC", "Luxury"]
+
+product_vars_two = ["Microsoft_Surface", "Play_Station_4", "MacBook_Air", "Samsung_Galaxy_Note_10",
+                    "Canon_Camera", "LG_LED_TV", "GTA_V", "Apple_Watch_3"]
+
+
+# # # # # #
 
 class Seed:
     user = User.objects.all()
+    sub_cat_count = 0
+    prod_count = 0
 
     def save_brands(self):
         # Seed Brands
@@ -41,7 +58,6 @@ class Seed:
 
         for i in files:
             file_path = brands_dir + "/" + i
-
             try:
                 file_name = path.splitext(i)[0]
 
@@ -55,7 +71,6 @@ class Seed:
 
             else:
                 count += 1
-
         if count > 0:
             print(colored("Successfully added " + str(count) +
                           " Brands to the database...", "green"))
@@ -69,7 +84,6 @@ class Seed:
 
         for i in files:
             file_path = categories_dir + "/" + i
-
             try:
                 file_name = path.splitext(i)[0]
 
@@ -77,10 +91,8 @@ class Seed:
                     img = ImageFile(f)
                     obj = Category(title=file_name)
                     obj.image.save(i, img, save=True)
-
             except Exception as e:
                 print("Error: \n" + str(e))
-
             else:
                 count += 1
 
@@ -90,51 +102,51 @@ class Seed:
         else:
             print(colored("No Categories were added to the database...", "red"))
 
-    def save_subcategories(self):
+    def _save_subcategories(self, sub_categ, categ):
         # Seed SubCategories
-        count = 0
         cat = Category.objects.all()
-        length = len(subcategory_vars_one)
+        length = len(sub_categ)
         q = 0
 
         while q < length:
-            sub_cat_name = subcategory_vars_one[q]
             try:
                 obj = SubCategory(category=cat.get(
-                    title=category_vars[q]), title=subcategory_vars_one[q])
+                    title=categ[q]), title=sub_categ[q])
                 obj.save()
             except Exception as e:
                 print("Error: \n" + str(e))
+                print(q)
 
             else:
-                count += 1
+                self.sub_cat_count += 1
             finally:
                 q += 1
 
-        if count > 0:
-            print(colored("Successfully added " + str(count) +
+    def save_subcategories(self):
+        self._save_subcategories(subcategory_vars_one, category_vars)
+        self._save_subcategories(subcategory_vars_two, category_vars)
+
+        if self.sub_cat_count > 0:
+            print(colored("Successfully added " + str(self.sub_cat_count) +
                           " SubCategories to the database...", "green"))
         else:
             print(colored("No SubCategories were added to the database...", "red"))
 
-    def save_products(self):
+    def _save_products(self, prod, sub_categ, br):
         # Seed Products
-        count = 0
-        length = len(product_vars_one)
+        length = len(prod)
         q = 0
 
         while q < length:
-
-            prod_name = product_vars_one[q]
+            prod_name = prod[q]
             file_path = products_dir + "/" + str(prod_name) + ".jpeg"
-
             all_sub_cat = SubCategory.objects.all()
             all_brands = Brand.objects.all()
 
             try:
                 sub_cat = all_sub_cat.get(
-                    title__exact=subcategory_vars_one[q].lower())
-                brand = all_brands.get(title__exact=brands[q])
+                    title__exact=sub_categ[q].lower())
+                brand = all_brands.get(title__exact=br[q])
                 #
                 with open(file_path, "rb") as f:
                     img = ImageFile(f)
@@ -144,14 +156,18 @@ class Seed:
                                   user_id=self.user[0].id)
             except Exception as e:
                 print("Error: \n" + str(e))
-
+                print(q)
             else:
-                count += 1
+                self.prod_count += 1
             finally:
                 q += 1
 
-        if count > 0:
-            print(colored("Successfully added " + str(count) +
+    def save_products(self):
+        self._save_products(product_vars_one, subcategory_vars_one, brand_vars_one)
+        self._save_products(product_vars_two, subcategory_vars_two, brand_vars_two)
+
+        if self.prod_count > 0:
+            print(colored("Successfully added " + str(self.prod_count) +
                           " Products to the database...", "green"))
         else:
             print(colored("No Products were added to the database...", "red"))
