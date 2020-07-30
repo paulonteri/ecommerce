@@ -15,4 +15,7 @@ handlers:
   - url: .*
     script: auto
     secure: always
+
+includes:
+  - env.yaml
 # python manage.py collectstatic && gcloud app deploy
