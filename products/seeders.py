@@ -19,12 +19,12 @@ categories_dir = images_dir + "/categories"
 # Values
 
 # brands
-all_brands = ["Apple", "Microsoft", "Samsung", "Hp", "Lg",
-              "Canon", "Asus", "Sony", "Apple", "Canon", "Samsung"]
+brands = ["Apple", "Microsoft", "Samsung", "Hp", "Lg",
+          "Canon", "Asus", "Sony", "Samsung", "Dell", "Intel", "Lenovo"]
 
 category_vars = ['tablets', 'consoles', 'computers',
                  'phones', 'photo', 'tv', 'games', 'watches']
-
+#
 brand_vars_one = ["Apple", "Microsoft", "Hp", "Lg",
                   "Canon", "Asus", "Sony", "Samsung"]
 
@@ -33,7 +33,7 @@ subcategory_vars_one = ['iPad', 'Xbox', 'Desktop', 'Feature Phone',
 
 product_vars_one = ["iPad_Pro", "XBox_360", "HP_Omen", "LG_Feature_Phone",
                     "Canon_Lens", "Asus_TV", "The_Witcher", "Samsung_Gear"]
-
+#
 brand_vars_two = ["Microsoft", "Sony", "Apple", "Samsung",
                   "Canon", "Lg", "Sony", "Apple"]
 
@@ -42,6 +42,15 @@ subcategory_vars_two = ["Surface", "Play Station", 'MacBook',
 
 product_vars_two = ["Microsoft_Surface", "Play_Station_4", "MacBook_Air", "Samsung_Galaxy_Note_10",
                     "Canon_Camera", "LG_LED_TV", "GTA_V", "Apple_Watch_3"]
+#
+brand_vars_three = ["Intel", "Dell", "Apple", "Apple",
+                    "Sony", "Lenovo", "Sony", "Asus"]
+
+subcategory_vars_three = ["Intel Notebook", "Alienware", 'MacBook', "iPhone",
+                          'CyberShot Camera', "4K TV", "XBox", "Health"]
+
+product_vars_three = ["Intel_Tablet", "Dell_Alienware", "MacBook_Pro", "iPhone_11",
+                      "Sony_CyberShot_Camera", "Lenovo_4K_TV", "Snow_Runner", "Asus_Vivo_Watch.jpeg"]
 
 
 # # # # # #
@@ -125,6 +134,7 @@ class Seed:
     def save_subcategories(self):
         self._save_subcategories(subcategory_vars_one, category_vars)
         self._save_subcategories(subcategory_vars_two, category_vars)
+        self._save_subcategories(subcategory_vars_three, category_vars)
 
         if self.sub_cat_count > 0:
             print(colored("Successfully added " + str(self.sub_cat_count) +
@@ -163,8 +173,12 @@ class Seed:
                 q += 1
 
     def save_products(self):
-        self._save_products(product_vars_one, subcategory_vars_one, brand_vars_one)
-        self._save_products(product_vars_two, subcategory_vars_two, brand_vars_two)
+        self._save_products(
+            product_vars_one, subcategory_vars_one, brand_vars_one)
+        self._save_products(
+            product_vars_two, subcategory_vars_two, brand_vars_two)
+        self._save_products(
+            product_vars_three, subcategory_vars_two, brand_vars_three)
 
         if self.prod_count > 0:
             print(colored("Successfully added " + str(self.prod_count) +
