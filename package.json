@@ -4,7 +4,7 @@
   "description": "Mordern online store built with Django and React.",
   "main": "main.js",
   "scripts": {
-    "build": "webpack --config webpack.config.js --progress --colors --mode development",
+    "build": "webpack -p --config webpack.config.js --progress --colors",
     "watch": "webpack --config webpack.config.js --watch --mode development"
   },
   "repository": {

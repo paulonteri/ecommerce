@@ -7,6 +7,7 @@ module.exports = {
 
   entry: {
     header: "./frontend/static/js/header",
+    subCategory: "./products/static/js/subCategory",
   },
 
   output: {
@@ -31,6 +32,8 @@ module.exports = {
     splitChunks: {
       // include all types of chunks
       chunks: "all",
+      maxSize: 0,
+      name: "vendor",
     },
   },
 };
