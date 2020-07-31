@@ -2,6 +2,7 @@ from django.http import Http404, HttpResponse
 from django.shortcuts import render
 
 from products.models import Item
+from products.selectors.catagories import get_all_categories_with_subcategories
 from products.selectors.items import get_item_full_detail
 
 
@@ -32,7 +33,10 @@ def index(request):
 
 
 def catalog(request):
-    return render(request, 'catalog/index.html', {})
+    context = {
+        "categories": get_all_categories_with_subcategories()
+    }
+    return render(request, 'categories/catalog.html', context=context)
 
 
 def categories(request):

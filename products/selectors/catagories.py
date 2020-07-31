@@ -7,7 +7,7 @@ from products.models import Category, Item, SubCategory
 from django.conf import settings
 
 
-def get_all_categories_with_subcat() -> dict:
+def get_all_categories_with_subcategories() -> dict:
     """
     All categories, each with all it's categories
     :return: All categories, each with all it's categories
