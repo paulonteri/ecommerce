@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Fragment } from "react-is";
-class App extends React.Component {
+class HeaderRight extends React.Component {
   render() {
     return (
       <Fragment>
@@ -91,4 +91,4 @@ class App extends React.Component {
     );
   }
 }
-ReactDOM.render(<App />, document.getElementById("navbar-content"));
+ReactDOM.render(<HeaderRight />, document.getElementById("navbar-content"));
