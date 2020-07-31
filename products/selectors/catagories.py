@@ -7,7 +7,7 @@ from products.models import Category, Item, SubCategory
 from django.conf import settings
 
 
-def get_all_categories_with_subcategories() -> dict:
+def get_all_categories_with_subcategories() -> list:
     """
     All categories, each with all it's categories
     :return: All categories, each with all it's categories
@@ -16,13 +16,15 @@ def get_all_categories_with_subcategories() -> dict:
                                          )
     sub_categories = SubCategory.objects.values("title", "category_id"  # ,"slug"
                                                 )
-
+    cats = []
     for foo in categories:
         foo["image"] = settings.MEDIA_URL + foo["image"]
         foo["sub_categories"] = [
             x for x in sub_categories if x['category_id'] == foo["id"]]
+        if len(foo["sub_categories"]) > 0:
+            cats.append(foo)
 
-    return categories
+    return cats
 
 
 def get_categories_ave_cost(categories: QuerySet) -> QuerySet:
