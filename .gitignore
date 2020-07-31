@@ -5,6 +5,10 @@
 env/
 .env
 
+node_modules/
+
+frontend/static/js/bundles
+
 gcloud_credentials.json
 
 env.yaml
