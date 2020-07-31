@@ -89,3 +89,5 @@ GS_FILE_OVERWRITE = False
 GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
     BASE_DIR + "/backend/settings/gcloud_credentials.json"
 )
+
+PROD = env.bool("PROD")

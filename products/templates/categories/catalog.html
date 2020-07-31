@@ -5,11 +5,10 @@
                 <div class="uk-grid-medium uk-child-width-1-1" uk-grid>
                     <div class="uk-text-center">
                         <ul class="uk-breadcrumb uk-flex-center uk-margin-remove">
-                            <li><a href="#">Home</a></li>
+                            <li><a href="/">Home</a></li>
                             <li><span>Catalog</span></li>
                         </ul>
                         <h1 class="uk-margin-small-top uk-margin-remove-bottom">Catalog</h1>
-                        <div class="uk-text-meta uk-margin-xsmall-top">641 items</div>
                     </div>
                     <div>
                         <div class="uk-grid-medium" uk-grid>
@@ -20,7 +19,7 @@
                                         uk-sticky="bottom: true; offset: 90"
                                 >
                                     <ul
-                                            class="uk-nav uk-nav-default uk-text-capitalize"
+                                            class="uk-nav uk-nav-default uk-text-capitalize uk-text-capitalize"
                                             uk-scrollspy-nav="closest: li; scroll: true; offset: 90"
                                     >
 
@@ -51,7 +50,7 @@
                                                                 height="50"
                                                         /></a>
                                                         <div class="uk-width-expand">
-                                                            <h2 class="uk-h4 uk-margin-remove">
+                                                            <h2 class="uk-h4 uk-margin-remove uk-text-capitalize">
                                                                 <a
                                                                         class="uk-link-heading"
                                                                         href="/categories/{{ category.slug }}"
@@ -62,7 +61,7 @@
                                                     </div>
                                                 </header>
                                                 {#          <------------------ SubCategories --------->   #}
-                                                <div class="uk-card-body">
+                                                <div class="uk-card-body uk-text-capitalize">
                                                     <ul class="uk-list">
                                                         {% for sub_cat in category.sub_categories %}
                                                             <li>
