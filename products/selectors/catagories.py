@@ -30,10 +30,12 @@ def header_display_categories() -> set:
     The Categories and Subcategories displayed on the Header
     :return: The Categories and Subcategories displayed on the Header
     """
-    categories = Category.objects.filter(subcategory__isnull=False).only("id", "title", "image",  # "slug"
-                                                                         )
+    categories = Category.objects.only("id", "title", "image",  # "slug"
+                                       )
     wanted_categories = set()
     for value in categories:
         value.the_subcategories = value.subcategory_set.all()
+        if len(value.the_subcategories) > 0 and len(wanted_categories) <= 4:
+            wanted_categories.add(value)
 
     return wanted_categories
