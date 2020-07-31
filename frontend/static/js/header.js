@@ -1,6 +1,5 @@
-import React from "react";
+import React, { Fragment } from "react";
 import ReactDOM from "react-dom";
-import { Fragment } from "react-is";
 class HeaderRight extends React.Component {
   render() {
     return (
@@ -53,7 +52,7 @@ class HeaderRight extends React.Component {
           data-uk-dropdown="pos: bottom-right; offset: -10; delay-hide: 200;"
           style={{ minWidth: "150px" }}
         >
-          <ul className="uk-nav data-uk-dropdown-nav">
+          <ul className="uk-nav uk-dropdown-nav">
             <li>
               <a href="#">
                 Orders
