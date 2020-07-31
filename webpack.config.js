@@ -5,18 +5,20 @@ var BundleTracker = require("webpack-bundle-tracker");
 module.exports = {
   context: __dirname,
 
-  entry: "./frontend/static/js/main",
+  entry: {
+    header: "./frontend/static/js/header",
+  },
 
   output: {
     path: path.resolve("./frontend/static/js/bundles/"),
-    filename: "[name]-[hash].js",
+    filename: "[name].js",
   },
 
   plugins: [new BundleTracker({ filename: "./webpack-stats.json" })],
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.jsx$/,
         exclude: /node_modules/,
         use: ["babel-loader"],
       },
@@ -24,5 +26,11 @@ module.exports = {
   },
   resolve: {
     extensions: ["*", ".js", ".jsx"],
+  },
+  optimization: {
+    splitChunks: {
+      // include all types of chunks
+      chunks: "all",
+    },
   },
 };

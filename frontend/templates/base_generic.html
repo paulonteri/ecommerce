@@ -14,7 +14,6 @@
         <header>
             {% include "header_generic.html" %}
         </header>
-        {% block sidebar %}<!-- insert default navigation text for every page -->{% endblock %}
         {% block content %}<!-- default content text (typically empty) -->{% endblock %}
         <section class="uk-section uk-section-default uk-section-small">
             <div class="uk-container">
@@ -88,7 +87,10 @@
     <script src="{% static 'js/index.js' %}"></script>
     <script src="{% static 'js/libs/uikit.min.js' %}"></script>
     <script src="{% static 'js/libs/uikit-icons.min.js' %}"></script>
-    {% block scripts %} <!-- scripts --> {% endblock %}
+{#        <!---------------- React(WebPack) 🔥🔥🔥 --------------------->        #}
+    <script src="{% static 'js/bundles/vendors~header.js' %}"></script>
+    <script src="{% static 'js/bundles/header.js' %}"></script>
+    {% block scripts %} <!-- more scripts --> {% endblock %}
     </body>
 {% endwith %}
 </html>
