@@ -25,16 +25,15 @@ def get_categories_ave_cost(categories: QuerySet) -> QuerySet:
     return categories
 
 
-def header_display_categories() -> QuerySet:
+def header_display_categories() -> set:
     """
     The Categories and Subcategories displayed on the Header
     :return: The Categories and Subcategories displayed on the Header
     """
-    categories = Category.objects.only("id", "title", "image",  # "slug"
-                                       )
+    categories = Category.objects.filter(subcategory__isnull=False).only("id", "title", "image",  # "slug"
+                                                                         )
+    wanted_categories = set()
     for value in categories:
-        value.subcategories = SubCategory.objects.filter(category_id=value.id).values("title",  # "slug"
-                                                                                      )
-        print(value.subcategories)
+        value.the_subcategories = value.subcategory_set.all()
 
-    return categories
+    return wanted_categories
