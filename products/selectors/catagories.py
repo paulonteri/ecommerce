@@ -4,6 +4,26 @@ from django.db.models import QuerySet
 
 from products.models import Category, Item, SubCategory
 
+from django.conf import settings
+
+
+def get_all_categories_with_subcat() -> dict:
+    """
+    All categories, each with all it's categories
+    :return: All categories, each with all it's categories
+    """
+    categories = Category.objects.values("id", "title", "image"  # ,"slug"
+                                         )
+    sub_categories = SubCategory.objects.values("title", "category_id"  # ,"slug"
+                                                )
+
+    for foo in categories:
+        foo["image"] = settings.MEDIA_URL + foo["image"]
+        foo["sub_categories"] = [
+            x for x in sub_categories if x['category_id'] == foo["id"]]
+
+    return categories
+
 
 def get_categories_ave_cost(categories: QuerySet) -> QuerySet:
     """
