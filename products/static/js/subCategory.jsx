@@ -1,28 +1,44 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 
-console.log(
-    JSON.parse(document.getElementById("subcategory-data").textContent)
-);
 class SubCategory extends Component {
+  constructor(props) {
+    super(props);
+
+    //
+    var subcategoryData = JSON.parse(
+        document.getElementById("subcategoryData").textContent
+    );
+
+    //
+    this.state = {
+      slug: subcategoryData.slug,
+      title: subcategoryData.title,
+      categoryTitle: subcategoryData.category__title,
+      brands: subcategoryData.brands,
+      items: subcategoryData.items,
+    };
+  }
+
   render() {
+    console.log(this.state);
     return (
-      <main>
-        <section className="uk-section uk-section-small">
-          <div className="uk-container">
-            <div className="uk-grid-medium uk-child-width-1-1" data-uk-grid>
-              <div className="uk-text-center">
-                <ul className="uk-breadcrumb uk-flex-center uk-margin-remove">
-                  <li>
-                    <a href="/">Home</a>
-                  </li>
-                  <li>
-                    <a href="/products/catalog">Catalog</a>
-                  </li>
-                  <li>
-                    <a href="/products/catalog/categories">
-                      Laptops &amp; Tablets
-                    </a>
+        <main>
+          <section className="uk-section uk-section-small">
+            <div className="uk-container">
+              <div className="uk-grid-medium uk-child-width-1-1" data-uk-grid>
+                <div className="uk-text-center">
+                  <ul className="uk-breadcrumb uk-flex-center uk-margin-remove">
+                    <li>
+                      <a href="/">Home</a>
+                    </li>
+                    <li>
+                      <a href="/products/catalog">Catalog</a>
+                    </li>
+                    <li>
+                      <a href="/products/catalog/categories">
+                        Laptops &amp; Tablets
+                      </a>
                   </li>
                   <li>
                     <span>Laptops</span>

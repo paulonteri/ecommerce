@@ -1,8 +1,8 @@
 {% extends "base_generic.html" %} {% block content %}
 
     {% if subcategory %}
-        {{ subcategory|json_script:"subcategory-data" }}
-        {#        const value = JSON.parse(document.getElementById('subcategory-data').textContent);              #}
+        {{ subcategory|json_script:"subcategoryData" }}
+        {#        const value = JSON.parse(document.getElementById('subcategoryData').textContent);              #}
 
         <div id="subcategory-page">
             <main class="large-spinner">

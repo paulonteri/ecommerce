@@ -83,14 +83,14 @@
             {% include "footer_generic.html" %}
         </footer>
     </div>
-    <script src="{% static 'js/libs/jquery-3.5.1.min.js' %}"></script>
-    <script src="{% static 'js/index.js' %}"></script>
     <script src="{% static 'js/libs/uikit.min.js' %}"></script>
     <script src="{% static 'js/libs/uikit-icons.min.js' %}"></script>
-{#        <!---------------- React (WebPack) 🔥🔥🔥 --------------------->        #}
+    {#        <!---------------- React (WebPack) 🔥🔥🔥 --------------------->        #}
     <script src="{% static 'js/bundles/vendor.js' %}"></script>
     <script src="{% static 'js/bundles/header.js' %}"></script>
     {% block scripts %} <!-- more scripts --> {% endblock %}
+    {# Other #}
+    <script src="{% static 'js/index.js' %}"></script>
     </body>
 {% endwith %}
 </html>
