@@ -55,13 +55,16 @@ jobs:
           AFRICASTALKING_CURRENCY: ${{ secrets.AFRICASTALKING_CURRENCY }}
       with:
         filename: env.yaml
-
-    - name: Replace env vars in file 2
-      uses: falnyr/replace-env-vars-action@v1.2.1
-      env:
-          GCLOUD_CRED_JSON: ${{ secrets.GCLOUD_CRED_JSON }}
+        
+    - name: Write File
+      uses: DamianReeves/write-file-action@v1.0
       with:
-        filename: backend/settings/gcloud_credentials.json
+        # The path to the file to write
+        path: backend/settings/gcloud_credentials.json
+        # The contents of the file
+        contents: ${{ secrets.GCLOUD_CRED_JSON }}
+        # The mode of writing to use: `overwrite`, `append`, or `preserve`.
+        write-mode: overwrite
         
     - name: Google App Engine (GAE) Deploy
       uses: atRobertoFlores/gae_deploy_action@1.2
