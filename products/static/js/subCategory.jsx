@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 
+console.log(
+    JSON.parse(document.getElementById("subcategory-data").textContent)
+);
 class SubCategory extends Component {
   render() {
     return (
@@ -2085,4 +2088,7 @@ class SubCategory extends Component {
   }
 }
 
-ReactDOM.render(<SubCategory />, document.getElementById("subcategory-page"));
+ReactDOM.render(
+    <SubCategory bahs={window.bah}/>,
+    document.getElementById("subcategory-page")
+);
