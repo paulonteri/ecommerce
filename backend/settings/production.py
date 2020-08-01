@@ -1,6 +1,3 @@
-import urllib.request
-from os.path import isfile
-
 from environs import Env
 from google.oauth2 import service_account
 
@@ -37,7 +34,7 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',),
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissions'
-    ]
+            ]
 }
 
 # Africa's talking
@@ -91,15 +88,7 @@ GS_LOCATION = env("GS_LOCATION")
 GS_DEFAULT_ACL = env("GS_DEFAULT_ACL")
 GS_FILE_OVERWRITE = False
 
-GS_FILE = BASE_DIR + "/backend/settings/cred.json"
-if not isfile(GS_FILE):
-    url = env("GS_FILE_URL")
-    file = urllib.request.urlopen(url).read().decode('utf-8')
-    f = open(GS_FILE, "w+")
-    f.write(file)
-    f.close()
-    GS_CREDENTIALS = service_account.Credentials.from_service_account_file(BASE_DIR + "/backend/settings/cred.json")
-else:
-    GS_CREDENTIALS = service_account.Credentials.from_service_account_file(BASE_DIR + "/backend/settings/cred.json")
+GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
+    BASE_DIR + "/backend/settings/cred.json")
 
 PROD = env.bool("PROD")
