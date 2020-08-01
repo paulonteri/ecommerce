@@ -28,6 +28,9 @@ jobs:
         
     - name: Install Python dependencies
       run: pip install -r requirements.txt
+      
+    - name: Django Collect Static
+      run: python manage.py collectstatic --noinput
 
     - name: Replace env vars in file
       uses: falnyr/replace-env-vars-action@v1.2.1
