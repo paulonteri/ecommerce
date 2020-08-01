@@ -5,6 +5,8 @@
 env/
 .env
 
+cred.json
+
 node_modules/
 
 ### Django ###

@@ -1,6 +1,10 @@
-from backend.settings.base import *
+import urllib.request
+from os.path import isfile
+
 from environs import Env
 from google.oauth2 import service_account
+
+from backend.settings.base import *
 
 env = Env()
 
@@ -86,8 +90,16 @@ GS_BUCKET_NAME = env("GS_BUCKET_NAME")
 GS_LOCATION = env("GS_LOCATION")
 GS_DEFAULT_ACL = env("GS_DEFAULT_ACL")
 GS_FILE_OVERWRITE = False
-GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
-    BASE_DIR + "/backend/settings/gcloud_credentials.json"
-)
+
+GS_FILE = BASE_DIR + "/backend/settings/cred.json"
+if not isfile(GS_FILE):
+    url = env("GS_FILE_URL")
+    file = urllib.request.urlopen(url).read().decode('utf-8')
+    f = open(GS_FILE, "w+")
+    f.write(file)
+    f.close()
+    GS_CREDENTIALS = service_account.Credentials.from_service_account_file(BASE_DIR + "/backend/settings/cred.json")
+else:
+    GS_CREDENTIALS = service_account.Credentials.from_service_account_file(BASE_DIR + "/backend/settings/cred.json")
 
 PROD = env.bool("PROD")
