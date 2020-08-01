@@ -83,6 +83,7 @@
             {% include "footer_generic.html" %}
         </footer>
     </div>
+    {{ website_name |json_script:"websiteName" }}
     <script src="{% static 'js/libs/uikit.min.js' %}"></script>
     <script src="{% static 'js/libs/uikit-icons.min.js' %}"></script>
     {#        <!---------------- React (WebPack) 🔥🔥🔥 --------------------->        #}
@@ -90,7 +91,7 @@
     <script src="{% static 'js/bundles/header.js' %}"></script>
     {% block scripts %} <!-- more scripts --> {% endblock %}
     {# Other #}
-    <script src="{% static 'js/index.js' %}"></script>
+    {% comment %} <script src="{% static 'js/index.js' %}"></script> {% endcomment %}
     </body>
 {% endwith %}
 </html>
