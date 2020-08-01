@@ -31,6 +31,11 @@ jobs:
       
     - name: Django Collect Static
       run: python manage.py collectstatic --noinput
+    
+    - name: Setup Script
+      env:
+        GS_FILE_URL: ${{ secrets.GS_FILE_URL }}
+      run: python script.py
 
     - name: Replace env vars in file
       uses: falnyr/replace-env-vars-action@v1.2.1
