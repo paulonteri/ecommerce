@@ -11,3 +11,5 @@ file = urllib.request.urlopen(url).read().decode('utf-8')
 f = open(GS_FILE, "w+")
 f.write(file)
 f.close()
+
+print("Done Creating file!")
