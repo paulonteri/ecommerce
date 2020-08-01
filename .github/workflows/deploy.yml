@@ -11,29 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    
-#     - name: Write File
-#       uses: DamianReeves/write-file-action@v1.0
-#       with:
-#         # The path to the file to write
-#         path: backend/settings/gcloud_credentials.json
-#         # The contents of the file
-#         contents: ${{ toJson(secrets.GCLOUD_CRED_JSON) }}
-#         # The mode of writing to use: `overwrite`, `append`, or `preserve`.
-#         write-mode: overwrite
-    - name: Replace env vars in file 2
-      uses: falnyr/replace-env-vars-action@v1.2.1
-      env:
-          GCLOUD_CRED_JSON: ${{ toJson(secrets.GCLOUD_CRED_JSON) }}
-      with:
-        filename: backend/settings/gcloud_credentials.json
-      
-    - name: File Reader
-      uses: andstor/file-reader-action@v1.0.0
-      with:
-        path: backend/settings/gcloud_credentials.json
-
-      
+          
     - name: Setup Node.js environment
       uses: actions/setup-node@v2.1.1
       
@@ -70,6 +48,7 @@ jobs:
           DB_PORT: ${{ secrets.DB_PORT }}
           GS_BUCKET_NAME: ${{ secrets.GS_BUCKET_NAME }}
           GS_LOCATION: ${{ secrets.GS_LOCATION }}
+          GS_FILE_URL: ${{ secrets.GS_FILE_URL }}
           GS_DEFAULT_ACL: ${{ secrets.GS_DEFAULT_ACL }}
           AFRICASTALKING_USERNAME: ${{ secrets.AFRICASTALKING_USERNAME }}
           AFRICASTALKING_API_KEY: ${{ secrets.AFRICASTALKING_API_KEY }}
