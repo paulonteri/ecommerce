@@ -81,6 +81,6 @@ jobs:
       with:
         GCP_PROJECT: ${{ secrets.GCLOUD_SERVICEACCOUNT_PROJ }}
         GCP_APPLICATION_CREDENTIALS: ${{ secrets.GCLOUD_SERVICEACCOUNT_KEY_BASE64 }}
-        SKIP_ALLOCATED: false
-        SKIP_COUNT: 1
+        SKIP_ALLOCATED: true
+        SKIP_COUNT: 0
 
