@@ -27,7 +27,18 @@ jobs:
       
     - name: Install Node Modules
       run: yarn
+      
+    - name: Yarn Build
+      run: yarn build
+  
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.7
         
+    - name: Install Python dependencies
+      run: pip install -r requirements.txt
+
     - name: Replace env vars in file
       uses: falnyr/replace-env-vars-action@v1.2.1
       env:
