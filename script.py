@@ -4,7 +4,7 @@ from environs import Env
 
 env = Env()
 
-GS_FILE = "./backend/settings/acrsdsdsed.json"
+GS_FILE = "./backend/settings/cred.json"
 
 url = env("GS_FILE_URL")
 file = urllib.request.urlopen(url).read().decode('utf-8')
