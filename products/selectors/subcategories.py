@@ -7,8 +7,9 @@ def get_subcategory_detail() -> dict:
     """
     Get a subcategory's details for display on subcategory page
     """
-    subcategory = SubCategory.objects.all().values(
-        "id", 'title', 'category__title')[5]
+    subcategory = SubCategory.objects.all().values("id", 'title', 'category__title'
+                                                   # ,'category__slug'
+                                                   )[5]
     # subcategory = SubCategory.objects.get(slug=slug)
     items = Item.objects.filter(sub_category=subcategory["id"]).values('title', 'price', 'discount_price', 'image',
                                                                        'brand_id', 'slug')
