@@ -1,0 +1,79 @@
+name: Build And Deploy
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v2.1.1
+      
+    - name: Install Node Modules
+      run: yarn
+      
+    - name: Yarn Build
+      run: yarn build
+  
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.7
+        
+    - name: Install Python dependencies
+      run: pip install -r requirements.txt
+      
+    - name: Django Collect Static
+      run: python manage.py collectstatic --noinput
+
+    - name: Replace env vars in file
+      uses: falnyr/replace-env-vars-action@v1.2.1
+      env:
+          SECRET: ${{ secrets.SECRET }}
+          DEBUG: ${{ secrets.DEBUG }}
+          PROD: ${{ secrets.PROD }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          DJANGO_SETTINGS_MODULE: ${{ secrets.DJANGO_SETTINGS_MODULE }}
+          ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          GS_BUCKET_NAME: ${{ secrets.GS_BUCKET_NAME }}
+          GS_LOCATION: ${{ secrets.GS_LOCATION }}
+          GS_DEFAULT_ACL: ${{ secrets.GS_DEFAULT_ACL }}
+          AFRICASTALKING_USERNAME: ${{ secrets.AFRICASTALKING_USERNAME }}
+          AFRICASTALKING_API_KEY: ${{ secrets.AFRICASTALKING_API_KEY }}
+          AFRICASTALKING_PAYMENT_PROD_NAME: ${{ secrets.AFRICASTALKING_PAYMENT_PROD_NAME }}
+          AFRICASTALKING_CURRENCY: ${{ secrets.AFRICASTALKING_CURRENCY }}
+      with:
+        filename: env.yaml
+
+    - name: Replace env vars in file 2
+      uses: falnyr/replace-env-vars-action@v1.2.1
+      env:
+          GCLOUD_CRED_JSON: ${{ secrets.GCLOUD_CRED_JSON }}
+      with:
+        filename: backend/settings/gcloud_credentials.json
+        
+    - name: Google App Engine (GAE) Deploy
+      uses: atRobertoFlores/gae_deploy_action@1.2
+      with:
+        service_account: ${{ secrets.GCLOUD_SERVICEACCOUNT_KEY }}
+        project_name: ${{ secrets.GCLOUD_SERVICEACCOUNT_PROJ }}
+        
+    - name: GAE Version Cleanup
+      uses: robinwelin/gae-version-cleanup@v1.0.1
+      with:
+        GCP_PROJECT: ${{ secrets.GCLOUD_SERVICEACCOUNT_PROJ }}
+        GCP_APPLICATION_CREDENTIALS: ${{ secrets.GCLOUD_SERVICEACCOUNT_KEY_BASE64 }}
+        SKIP_ALLOCATED: true
+        SKIP_COUNT: 0
+
