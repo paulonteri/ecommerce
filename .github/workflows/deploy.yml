@@ -22,8 +22,11 @@ jobs:
         # The mode of writing to use: `overwrite`, `append`, or `preserve`.
         write-mode: overwrite
       
-    - name: File Contents
-      run: cat backend/settings/gcloud_credentials.json
+    - name: File Reader
+      uses: andstor/file-reader-action@v1.0.0
+      with:
+        path: backend/settings/gcloud_credentials.json
+
       
     - name: Setup Node.js environment
       uses: actions/setup-node@v2.1.1
