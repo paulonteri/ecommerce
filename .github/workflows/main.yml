@@ -80,6 +80,6 @@ jobs:
       uses: robinwelin/gae-version-cleanup@v1.0.1
       with:
         GCP_PROJECT: ${{ secrets.GCLOUD_SERVICEACCOUNT_PROJ }}
-        GCP_APPLICATION_CREDENTIALS: ${{ secrets.GCLOUD_SERVICEACCOUNT_KEY }}
+        GCP_APPLICATION_CREDENTIALS: ${{ secrets.GCLOUD_SERVICEACCOUNT_KEY_BASE64 }}
         SKIP_COUNT: 1
 
