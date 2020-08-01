@@ -63,13 +63,6 @@ jobs:
       with:
         filename: backend/settings/gcloud_credentials.json
         
-    - name: Deploy app to Google App Engine
-      uses: zxyle/publish-gae-action@v2.3
-      with:
-        service_account_email: ${{ secrets.GCLOUD_SERVICEACCOUNT_EMAIL }}
-        service_account_key: ${{ secrets.GCLOUD_SERVICEACCOUNT_KEY }}
-        project_id: ${{ secrets.GCLOUD_SERVICEACCOUNT_PROJ }}
-        
     - name: Google App Engine (GAE) Deploy
       uses: atRobertoFlores/gae_deploy_action@1.2
       with:
