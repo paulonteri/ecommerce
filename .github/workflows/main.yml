@@ -1,0 +1,47 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+        
+    - name: Replace env vars in file
+      uses: falnyr/replace-env-vars-action@v1.2.1
+      env:
+          SECRET: ${{ secrets.SECRET }}
+          DEBUG: ${{ secrets.DEBUG }}
+          PROD: ${{ secrets.PROD }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          DJANGO_SETTINGS_MODULE: ${{ secrets.DJANGO_SETTINGS_MODULE }}
+          ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          GS_BUCKET_NAME: ${{ secrets.GS_BUCKET_NAME }}
+          GS_LOCATION: ${{ secrets.GS_LOCATION }}
+          GS_DEFAULT_ACL: ${{ secrets.GS_DEFAULT_ACL }}
+          AFRICASTALKING_USERNAME: ${{ secrets.AFRICASTALKING_USERNAME }}
+          AFRICASTALKING_API_KEY: ${{ secrets.AFRICASTALKING_API_KEY }}
+          AFRICASTALKING_PAYMENT_PROD_NAME: ${{ secrets.AFRICASTALKING_PAYMENT_PROD_NAME }}
+          AFRICASTALKING_CURRENCY: ${{ secrets.AFRICASTALKING_CURRENCY }}
+      with:
+        filename: env.yaml
