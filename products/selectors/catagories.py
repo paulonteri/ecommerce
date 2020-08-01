@@ -79,7 +79,7 @@ def get_category_detail() -> dict:
         del bar["id"]
 
     items = Item.objects.filter(sub_category__in=subcategory_ids).values('title', 'price', 'discount_price', 'image',
-                                                                         'brand_id', 'slug')
+                                                                         'brand_id', 'slug', 'sub_category__title')
     brand_ids = []
     for item in items:
         item["image"] = settings.MEDIA_URL + item["image"]

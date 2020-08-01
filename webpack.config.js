@@ -7,6 +7,7 @@ module.exports = {
 
   entry: {
     header: "./frontend/static/js/header",
+    category: "./products/static/js/category",
     subCategory: "./products/static/js/subCategory",
   },
 
