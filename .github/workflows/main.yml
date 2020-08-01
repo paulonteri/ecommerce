@@ -75,3 +75,11 @@ jobs:
       with:
         service_account: ${{ secrets.GCLOUD_SERVICEACCOUNT_KEY }}
         project_name: ${{ secrets.GCLOUD_SERVICEACCOUNT_PROJ }}
+        
+    - name: GAE Version Cleanup
+      uses: robinwelin/gae-version-cleanup@v1.0.1
+      with:
+        GCP_PROJECT: ${{ secrets.GCLOUD_SERVICEACCOUNT_PROJ }}
+        GCP_APPLICATION_CREDENTIALS: ${{ secrets.GCLOUD_SERVICEACCOUNT_KEY }}
+        SKIP_COUNT: 1
+
