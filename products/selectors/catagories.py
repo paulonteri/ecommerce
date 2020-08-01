@@ -1,10 +1,9 @@
 from random import randint
 
+from django.conf import settings
 from django.db.models import QuerySet
 
-from products.models import Category, Item, SubCategory
-
-from django.conf import settings
+from products.models import Category, Item, SubCategory, Brand
 
 
 def get_all_categories_with_subcategories() -> list:
@@ -61,3 +60,37 @@ def header_display_categories() -> set:
             wanted_categories.add(value)
 
     return wanted_categories
+
+
+def get_category_detail() -> dict:
+    """
+    Get a category's details for display on category page
+    """
+    category = Category.objects.all().values("id", 'title',
+                                             # ,'category__slug'
+                                             )[6]
+    # category = Category.objects.get(slug=slug)
+
+    subcategories = SubCategory.objects.filter(category=category["id"]).values('id', 'title'  # ,'slug'
+                                                                               )
+    subcategory_ids = []
+    for bar in subcategories:
+        subcategory_ids.append(bar["id"])
+        del bar["id"]
+
+    items = Item.objects.filter(sub_category__in=subcategory_ids).values('title', 'price', 'discount_price', 'image',
+                                                                         'brand_id', 'slug')
+    brand_ids = []
+    for item in items:
+        item["image"] = settings.MEDIA_URL + item["image"]
+        brand_ids.append(item["brand_id"])
+    brands = Brand.objects.filter(pk__in=brand_ids).values("title"  # ,"slug"
+                                                           )
+
+    category["subcategories"] = list(subcategories)
+    category["items"] = list(items)
+    category["brands"] = list(brands)
+
+    del category["id"]
+
+    return category

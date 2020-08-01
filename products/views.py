@@ -1,11 +1,8 @@
-from django.core import serializers
 from django.http import Http404, HttpResponse
 from django.shortcuts import render
 
-import json
-
 from products.models import Item
-from products.selectors.catagories import get_all_categories_with_subcategories
+from products.selectors.catagories import get_all_categories_with_subcategories, get_category_detail
 from products.selectors.items import get_item_full_detail
 from products.selectors.subcategories import get_subcategory_detail
 
@@ -44,7 +41,10 @@ def catalog(request):
 
 
 def categories(request):
-    return render(request, 'categories/index.html', {})
+    context = {
+        "category": get_category_detail()
+    }
+    return render(request, 'categories/category.html', context=context)
 
 
 def subcategory(request):

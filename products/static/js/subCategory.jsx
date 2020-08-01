@@ -6,11 +6,11 @@ class SubCategory extends Component {
     super(props);
 
     //
-    var subcategoryData = JSON.parse(
-      document.getElementById("subcategoryData").textContent
+    const subcategoryData = JSON.parse(
+        document.getElementById("subcategoryData").textContent
     );
-    var websiteName = JSON.parse(
-      document.getElementById("websiteName").textContent
+    const websiteName = JSON.parse(
+        document.getElementById("websiteName").textContent
     );
 
     //
@@ -451,7 +451,4 @@ class SubCategory extends Component {
   }
 }
 
-ReactDOM.render(
-  <SubCategory bahs={window.bah} />,
-  document.getElementById("subcategory-page")
-);
+ReactDOM.render(<SubCategory/>, document.getElementById("subcategory-page"));
