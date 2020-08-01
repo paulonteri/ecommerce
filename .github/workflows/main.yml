@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Build And Deploy
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
@@ -62,3 +62,10 @@ jobs:
           AFRICASTALKING_CURRENCY: ${{ secrets.AFRICASTALKING_CURRENCY }}
       with:
         filename: env.yaml
+
+    - name: Replace env vars in file 2
+      uses: falnyr/replace-env-vars-action@v1.2.1
+      env:
+          GCLOUD_CRED_JSON: ${{ secrets.GCLOUD_CRED_JSON }}
+      with:
+        filename: backend/settings/gcloud_credentials.json
