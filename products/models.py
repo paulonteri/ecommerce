@@ -2,6 +2,7 @@ from django.db import models
 
 
 class CommonModelInfo(models.Model):
+    slug = models.SlugField(unique=True)
     time_added = models.DateTimeField(
         auto_now_add=True)
     time_last_edited = models.DateTimeField(
@@ -14,9 +15,8 @@ class CommonModelInfo(models.Model):
         abstract = True
 
 
-# TODO: Add slug
 class Category(CommonModelInfo):
-    title = models.CharField(max_length=30, unique=True)
+    title = models.CharField(max_length=20, unique=True)
     image = models.ImageField(
         upload_to='images/dynamic/products/categories', null=True)
 
@@ -33,9 +33,8 @@ class Category(CommonModelInfo):
         return self.title
 
 
-# TODO: Add slug
 class SubCategory(CommonModelInfo):
-    title = models.CharField(max_length=50, unique=True)
+    title = models.CharField(max_length=20, unique=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     image = models.ImageField(
         upload_to='images/dynamic/products/subcategories', null=True)
@@ -53,9 +52,8 @@ class SubCategory(CommonModelInfo):
         return f'{self.title} of {self.category.title}'
 
 
-# TODO: Add slug
 class Brand(CommonModelInfo):
-    title = models.CharField(max_length=30, unique=True)
+    title = models.CharField(max_length=20, unique=True)
     image = models.ImageField(
         upload_to='images/dynamic/products/brands', null=True)
 
@@ -74,7 +72,6 @@ class Item(CommonModelInfo):
     sub_category = models.ForeignKey(SubCategory, on_delete=models.CASCADE)
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
     description = models.TextField()
-    slug = models.SlugField(unique=True)
     image = models.ImageField(upload_to='images/dynamic/products/items/')
 
     class Meta:

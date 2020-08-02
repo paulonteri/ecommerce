@@ -50,7 +50,7 @@ subcategory_vars_three = ["Intel Notebook", "Alienware", 'MacBook', "iPhone",
                           'CyberShot Camera', "4K TV", "XBox", "Health"]
 
 product_vars_three = ["Intel_Tablet", "Dell_Alienware", "MacBook_Pro", "iPhone_11",
-                      "Sony_CyberShot_Camera", "Lenovo_4K_TV", "Snow_Runner", "Asus_Vivo_Watch.jpeg"]
+                      "Sony_CyberShot_Camera", "Lenovo_4K_TV", "Snow_Runner", "Asus_Vivo_Watch"]
 
 
 # # # # # #
@@ -72,7 +72,7 @@ class Seed:
 
                 with open(file_path, "rb") as f:
                     img = ImageFile(f)
-                    obj = Brand(title=file_name.capitalize())
+                    obj = Brand(title=file_name.capitalize(), slug=file_name.replace("_", " ").capitalize())
                     obj.image.save(i, img, save=True)
 
             except Exception as e:
@@ -98,7 +98,7 @@ class Seed:
 
                 with open(file_path, "rb") as f:
                     img = ImageFile(f)
-                    obj = Category(title=file_name)
+                    obj = Category(title=file_name, slug=file_name.replace("_", " "))
                     obj.image.save(i, img, save=True)
             except Exception as e:
                 print("Error: \n" + str(e))
@@ -119,8 +119,8 @@ class Seed:
 
         while q < length:
             try:
-                obj = SubCategory(category=cat.get(
-                    title=categ[q]), title=sub_categ[q])
+                obj = SubCategory(category=cat.get(title=categ[q]), title=sub_categ[q],
+                                  slug=sub_categ[q].replace("_", " "))
                 obj.save()
             except Exception as e:
                 print("Error: \n" + str(e))
@@ -162,7 +162,7 @@ class Seed:
                     img = ImageFile(f)
                     save_products(title=prod_name.replace("_", " "), price=randint(9999, 999999),
                                   sub_category_id=sub_cat.id, brand_id=brand.id,
-                                  description=prod_name.replace("_", " ") + "...", slug='_' + prod_name, image=img,
+                                  description=prod_name.replace("_", " ") + "...", slug=prod_name, image=img,
                                   user_id=self.user[0].id)
             except Exception as e:
                 print("Error: \n" + str(e))
