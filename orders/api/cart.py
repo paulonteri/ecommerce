@@ -48,15 +48,8 @@ class AddToCartAPI(APIView):
         if slug is None:
             return Response({"message": "Invalid request"}, status=HTTP_400_BAD_REQUEST)
         item = get_object_or_404(Item, slug=slug)
-
-        # verify number of variations
-        variations = request.data.get('variations', [])
-        minimum_variation_count = Variation.objects.filter(item=item).count()
-        if len(variations) < minimum_variation_count:
-            return Response({"message": "Please specify the required variation types"}, status=HTTP_400_BAD_REQUEST)
-
         try:
-            add_to_cart(item=item, variations=variations, user=request.user)
+            add_to_cart(item=item,  user=request.user)
         except Exception as e:
             raise APIException(e)
         else:

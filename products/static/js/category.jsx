@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import ReactDOM from "react-dom";
+import { AddToCart } from "../../../frontend/static/js/header";
 
 class Category extends Component {
   constructor(props) {
@@ -240,63 +241,7 @@ class Category extends Component {
                     <del className="uk-text-meta">$1899.00</del>
                     <div className="tm-product-card-price">{item.price}</div>
                   </div>
-
-                  <div className="tm-product-card-add">
-                    <div className="uk-text-meta tm-product-card-actions">
-                      <a
-                        className="tm-product-card-action js-add-to js-add-to-favorites tm-action-button-active js-added-to"
-                        title="Add to favorites"
-                      >
-                        <span
-                          uk-icon="icon: heart; ratio: .75;"
-                          className="uk-icon"
-                        >
-                          <svg
-                            width="15"
-                            height="15"
-                            viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg"
-                            data-svg="heart"
-                          >
-                            <path
-                              fill="none"
-                              stroke="#000"
-                              strokeWidth="1.03"
-                              d="M10,4 C10,4 8.1,2 5.74,2 C3.38,2 1,3.55 1,6.73 C1,8.84 2.67,10.44 2.67,10.44 L10,18 L17.33,10.44 C17.33,10.44 19,8.84 19,6.73 C19,3.55 16.62,2 14.26,2 C11.9,2 10,4 10,4 L10,4 Z"
-                            ></path>
-                          </svg>
-                        </span>
-                        <span className="tm-product-card-action-text">
-                          Add to favorites
-                        </span>
-                      </a>
-                    </div>
-                    <button className="uk-button uk-button-primary tm-product-card-add-button tm-shine js-add-to-cart">
-                      <span
-                        className="tm-product-card-add-button-icon uk-icon"
-                        uk-icon="cart"
-                      >
-                        <svg
-                          width="20"
-                          height="20"
-                          viewBox="0 0 20 20"
-                          xmlns="http://www.w3.org/2000/svg"
-                          data-svg="cart"
-                        >
-                          <circle cx="7.3" cy="17.3" r="1.4"></circle>
-                          <circle cx="13.3" cy="17.3" r="1.4"></circle>
-                          <polyline
-                            fill="none"
-                            stroke="#000"
-                            points="0 2 3.2 4 5.3 12.5 16 12.5 18 6.5 8 6.5"
-                          ></polyline>
-                        </svg>
-                      </span>
-                      <span className="tm-product-card-add-button-text">
-                        add to cart
-                      </span>
-                    </button>
-                  </div>
+                  <AddToCart />
                 </div>
               </div>
             </article>
