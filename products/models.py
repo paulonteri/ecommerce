@@ -81,6 +81,16 @@ class Item(CommonModelInfo):
         return self.title
 
 
+#
+#
+#
+#
+#
+#
+#
+#
+#
+
 class Variation(CommonModelInfo):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)  # size, color
