@@ -8,23 +8,19 @@ from payments.models import Payment, Coupon
 from products.models import Item, Variation
 
 
-def add_to_cart(user: User, item: Item, variations):
+def add_to_cart(user: User, item: Item, variations=None):
     """
     Add OrderItems to Order(cart)
+    One Item at a Time
     """
 
+    # check if OrderItem
     # order item queryset, check for items already in the cart
     order_item_qs = OrderItem.objects.filter(
         item=item,
         user=user,
         ordered=False
     )
-
-    if variations:
-        for v in variations:
-            order_item_qs = order_item_qs.filter(
-                Q(item_variations__exact=v)
-            )
 
     # if item is in OrderItem, add quantity
     if order_item_qs.exists():
@@ -38,7 +34,7 @@ def add_to_cart(user: User, item: Item, variations):
             user=user,
             ordered=False
         )
-        order_item.item_variations.add(*variations)
+
         order_item.save()
 
     # check if there is an active order
