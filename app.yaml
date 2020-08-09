@@ -5,6 +5,7 @@ service: ecommerce
 env: standard
 instance_class: F1
 automatic_scaling:
+  target_cpu_utilization: 0.9
   min_instances: 1
   max_instances: 1
 
