@@ -1,4 +1,6 @@
 runtime: python37
+# https://cloud.google.com/appengine/docs/standard/python3/runtime#entrypoint_best_practices
+# entrypoint: gunicorn -b :8080 -w 1 main:app
 service: ecommerce
 # api_version: 1
 # threadsafe: yes
