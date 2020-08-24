@@ -7,6 +7,9 @@ from orders.selectors.orders import get_order_for_items_update
 from payments.models import Payment, Coupon
 from products.models import Item, Variation
 
+# TODO: Transaction Atomic
+# https://github.com/ljodal/djangocon-eu-2019/blob/master/orders/managers.py
+
 
 def add_to_cart(user: User, item: Item, variations=None):
     """
