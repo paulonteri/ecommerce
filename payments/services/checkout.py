@@ -2,6 +2,8 @@ from orders.models import Order
 from payments.models import Payment, Transaction, TransactionPhone
 from payments.services.payments import mobile_payments
 
+# TODO: Transaction Atomic
+# https://github.com/ljodal/djangocon-eu-2019/blob/master/orders/managers.py
 
 def payment_failed(payment: Payment):
     """
