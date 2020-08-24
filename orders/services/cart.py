@@ -13,6 +13,9 @@ def add_to_cart(user: User, item: Item, variations=None):
     Add OrderItems to Order(cart)
     One Item at a Time
     """
+    
+    # TODO: Transaction Atomic
+    # https://github.com/ljodal/djangocon-eu-2019/blob/master/orders/managers.py
 
     # check if OrderItem
     # order item queryset, check for items already in the cart
