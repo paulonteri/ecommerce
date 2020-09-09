@@ -20,6 +20,7 @@ DATABASES = {
         'HOST': env("DB_HOST"),
         'PORT': env("DB_PORT"),
         'CONN_MAX_AGE ': 10,
+        'ATOMIC_REQUESTS': env.bool('ATOMIC_REQUESTS', True),
     }
 }
 
