@@ -13,7 +13,7 @@ django-countries==6.1.2
 django-debug-toolbar==2.2
 django-rest-knox==4.1.0
 django-storages==1.9.1
-djangorestframework==3.11.0
+djangorestframework==3.11.2
 environs==8.0.0
 google-api-core==1.22.0
 google-auth==1.20.0
