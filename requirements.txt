@@ -6,7 +6,7 @@ cffi==1.14.0
 chardet==3.0.4
 contextlib2==0.6.0.post1
 cryptography==2.9.2
-Django==3.0.7
+Django==3.0.14
 django-cleanup==5.0.0
 django-cors-headers==3.3.0
 django-countries==6.1.2
