@@ -36,7 +36,7 @@ pycparser==2.20
 python-dotenv==0.13.0
 pytz==2020.1
 requests==2.23.0
-rsa==4.6
+rsa==4.7
 schema==0.7.2
 six==1.15.0
 sqlparse==0.3.1
